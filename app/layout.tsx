@@ -7,6 +7,8 @@ import type { Navigation } from "@toolpad/core/AppProvider";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import theme from "../theme";
 import { auth } from "../auth";
+import Link from "next/link";
+import SitemarkIcon from "./components/template_components/SitemarkIcon";
 
 const NAVIGATION: Navigation = [
   {
@@ -16,17 +18,22 @@ const NAVIGATION: Navigation = [
   {
     title: "Dashboard",
     icon: <DashboardIcon />,
-  },
-  {
-    segment: "orders",
-    title: "Orders",
-    icon: <ShoppingCartIcon />,
+    segment: "dashboard",
   },
 ];
 
 const AUTHENTICATION = {
   signIn,
   signOut,
+};
+
+const BRANDING = {
+  logo: (
+    <Link href="/">
+      <SitemarkIcon />
+    </Link>
+  ),
+  title: "Syftset",
 };
 
 export default async function RootLayout({
@@ -43,6 +50,7 @@ export default async function RootLayout({
               navigation={NAVIGATION}
               session={session}
               authentication={AUTHENTICATION}
+              branding={BRANDING}
             >
               {children}
             </AppProvider>
