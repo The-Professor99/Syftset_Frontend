@@ -62,6 +62,7 @@ function SidebarFooterAccountPopover({
               disableElevation
               LinkComponent={Link}
               href={extraPage.link}
+              key={extraPage.name}
             >
               {extraPage.name}
             </Button>

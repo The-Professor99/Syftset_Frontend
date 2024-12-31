@@ -118,6 +118,11 @@ export default function ForgotPasswordPage({
                     {error}
                   </Alert>
                 ) : null}
+                {success && selectedProviderId === "credentials" ? (
+                  <Alert sx={{ my: 2 }} severity="success">
+                    {success}
+                  </Alert>
+                ) : null}
                 <Box
                   component="form"
                   onSubmit={async (event) => {
@@ -136,6 +141,7 @@ export default function ForgotPasswordPage({
                       ...prev,
                       loading: false,
                       error: credentialsResponse?.error,
+                      success: credentialsResponse?.success,
                     }));
                   }}
                 >

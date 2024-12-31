@@ -87,6 +87,7 @@ export default function AppAppBar() {
                   size="small"
                   LinkComponent={Link}
                   href={navItem.link}
+                  key={navItem.name}
                 >
                   {navItem.name}
                 </Button>
@@ -146,7 +147,11 @@ export default function AppAppBar() {
                 </Box>
 
                 {navItems.map((navItem) => (
-                  <MenuItem LinkComponent={Link} href={navItem.link}>
+                  <MenuItem
+                    LinkComponent={Link}
+                    href={navItem.link}
+                    key={navItem.name}
+                  >
                     {navItem.name}
                   </MenuItem>
                 ))}

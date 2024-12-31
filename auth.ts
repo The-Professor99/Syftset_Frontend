@@ -1,32 +1,32 @@
 import NextAuth from "next-auth";
-import GitHub from "next-auth/providers/github";
-import Google from "next-auth/providers/google";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
+import { auth as firebaseAuth } from "./firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 const providers: Provider[] = [
-  GitHub({
-    clientId: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-  }),
-  Google({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  }),
   Credentials({
     credentials: {
       email: { label: "Email Address", type: "email" },
       password: { label: "Password", type: "password" },
     },
-    authorize(c) {
-      if (c.password === "@demo1" && c.email === "toolpad-demo@mui.com") {
-        return {
-          id: "test",
-          name: "Toolpad Demo",
-          email: String(c.email),
+    async authorize(c) {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          firebaseAuth,
+          String(c.email),
+          String(c.password)
+        );
+        const user = userCredential.user;
+        const userDetails = {
+          id: user.uid,
+          email: String(user.email),
+          name: user.displayName,
         };
+        return userDetails;
+      } catch (error) {
+        return null;
       }
-      return null;
     },
   }),
 ];
@@ -48,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     authorized({ auth: session, request: { nextUrl } }) {
       const isLoggedIn = !!session?.user;
-      const isPublicPage = nextUrl.pathname.startsWith("/public");
+      const isPublicPage = !nextUrl.pathname.includes("/dashboard"); // if page not a dashboard page and not an auth page
 
       if (isPublicPage || isLoggedIn) {
         return true;

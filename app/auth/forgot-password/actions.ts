@@ -1,37 +1,32 @@
-"use client";
-import { AuthError } from "next-auth";
+"use server";
 import type { AuthProvider } from "@toolpad/core";
-import { signIn as signInAction } from "../../../auth";
+import { sendPasswordResetEmail } from "firebase/auth";
+import { auth as firebaseAuth } from "@/firebase";
+import { appRoutes } from "@/app/_helpers/routes";
+import { FirebaseError } from "firebase/app";
 
 async function forgotPassword(provider: AuthProvider, formData: FormData) {
   try {
-    return await signInAction(provider.id, {
-      ...(formData && {
-        email: formData.get("email"),
-        password: formData.get("password"),
-      }),
-    });
+    const actionCodeSettings = {
+      url: `${process.env.NEXT_PUBLIC_LIVE_URL}/${appRoutes.signIn}`,
+    };
+    const emailSent = await sendPasswordResetEmail(
+      firebaseAuth,
+      String(formData.get("email")),
+      actionCodeSettings
+    );
+    console.log(emailSent);
+    return {
+      success:
+        "Your password reset mail has been sent. Please check your spam/junk folder if you do not see it within 5minutes",
+    };
   } catch (error) {
-    // The desired flow for successful sign in in all cases
-    // and unsuccessful sign in for OAuth providers will cause a `redirect`,
-    // and `redirect` is a throwing function, so we need to re-throw
-    // to allow the redirect to happen
-    // Source: https://github.com/vercel/next.js/issues/49298#issuecomment-1542055642
-    // Detect a `NEXT_REDIRECT` error and re-throw it
-    if (error instanceof Error && error.message === "NEXT_REDIRECT") {
-      throw error;
-    }
-    // Handle Auth.js errors
-    if (error instanceof AuthError) {
+    if (error instanceof FirebaseError) {
       return {
-        error:
-          error.type === "CredentialsSignin"
-            ? "Invalid credentials."
-            : "An error with Auth.js occurred.",
-        type: error.type,
+        error: error.code?.replace("auth/", "").replaceAll("-", " "),
+        type: error.name,
       };
     }
-    // An error boundary must exist to handle unknown errors
     return {
       error: "Something went wrong.",
       type: "UnknownError",
