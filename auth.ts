@@ -3,6 +3,7 @@ import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
 import { auth as firebaseAuth } from "./firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { appRoutes } from "./app/_helpers/routes";
 
 const providers: Provider[] = [
   Credentials({
@@ -48,13 +49,18 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   callbacks: {
     authorized({ auth: session, request: { nextUrl } }) {
       const isLoggedIn = !!session?.user;
-      const isPublicPage = !nextUrl.pathname.includes("/dashboard"); // if page not a dashboard page and not an auth page
+      const isOnDashboard = nextUrl.pathname.startsWith(appRoutes.dashboard);
+      const isOnAuth = nextUrl.pathname.startsWith(appRoutes.auth);
 
-      if (isPublicPage || isLoggedIn) {
-        return true;
+      if (isOnDashboard && !isLoggedIn) {
+        return false; // Redirect unauthenticated users to login page
       }
 
-      return false; // Redirect unauthenticated users to login page
+      if (isLoggedIn && isOnAuth) {
+        return Response.redirect(new URL(appRoutes.dashboard, nextUrl));
+      }
+
+      return true;
     },
   },
 });
