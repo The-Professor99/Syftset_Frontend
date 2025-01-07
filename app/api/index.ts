@@ -2,7 +2,12 @@
 import { db } from "@/app/lib/firebase/firebase";
 import { collection, getDocs } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { AccountMode, AccountModeDetails, Transaction } from "../lib/types";
+import {
+  AccountMode,
+  AccountModeDetails,
+  Transaction,
+  TransactionTableCategory,
+} from "../lib/types";
 import { FirebaseError } from "firebase/app";
 
 export async function getAccountModes() {
@@ -52,6 +57,54 @@ export async function getAccountModes() {
       throw new Error(error.message);
     } else {
       throw new Error("Failed to fetch account modes.");
+    }
+  }
+}
+
+export async function getAllDeposits(
+  accountMode: AccountMode,
+  collectionName: TransactionTableCategory
+) {
+  // const auth = getAuth();
+  const userId = "hadT622IoNaDCC4mSMmYI6vdF2t2"; //auth.currentUser?.uid; console.log()
+
+  try {
+    if (userId) {
+      const depositsRef = collection(
+        db,
+        "users",
+        userId,
+        collectionName,
+        accountMode,
+        "entries"
+      );
+      const snapshot = await getDocs(depositsRef);
+
+      const deposits: Transaction[] = [];
+      snapshot.forEach((doc) => {
+        const accountData = doc.data() as Omit<Transaction, "id">;
+        deposits.push({ id: doc.id, ...accountData });
+      });
+      // const deposits: Transaction[] = [
+      //   {
+      //     id: "1",
+      //     amount: 50,
+      //     createdAt: "dlld",
+      //     prevBalance: 45,
+      //     newBalance: 8,
+      //   },
+      // ];
+      console.log(deposits);
+      return deposits;
+    } else {
+      throw new Error("User Id is required");
+    }
+  } catch (error) {
+    console.error("Database Error:", error);
+    if (error instanceof FirebaseError || error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error("Failed to fetch deposits.");
     }
   }
 }

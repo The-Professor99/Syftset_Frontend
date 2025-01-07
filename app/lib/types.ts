@@ -40,6 +40,7 @@ export type Activity = {
   type: ActivityType;
 };
 
-export type TransactionComponentProps = {
-  accountMode: AccountMode;
-};
+export type TransactionTableCategory =
+  | "deposits"
+  | "withdrawals"
+  | "recent_activities";
