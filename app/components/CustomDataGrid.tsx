@@ -2,13 +2,16 @@
 import * as React from "react";
 import { DataGrid, DataGridProps } from "@mui/x-data-grid";
 
+type CustomDataGridProps = {
+  rows: DataGridProps["rows"];
+  columns: DataGridProps["columns"];
+} & DataGridProps;
+
 export default function CustomizedDataGrid({
   rows,
   columns,
-}: {
-  rows: DataGridProps["rows"];
-  columns: DataGridProps["columns"];
-}) {
+  ...rest
+}: CustomDataGridProps) {
   return (
     <div style={{ display: "flex", flexDirection: "column" }}>
       <DataGrid
@@ -62,6 +65,7 @@ export default function CustomizedDataGrid({
             },
           },
         }}
+        {...rest}
       />
     </div>
   );

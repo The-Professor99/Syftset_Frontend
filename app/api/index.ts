@@ -61,7 +61,7 @@ export async function getAccountModes() {
   }
 }
 
-export async function getAllDeposits(
+export async function getTransactions(
   accountMode: AccountMode,
   collectionName: TransactionTableCategory
 ) {

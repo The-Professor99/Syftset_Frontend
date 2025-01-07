@@ -1,10 +1,6 @@
-import { db } from "@/app/lib/firebase/firebase";
-import { getAuth } from "firebase/auth";
-import { collection, doc, getDoc, getDocs } from "firebase/firestore";
 import { NextResponse } from "next/server";
-import { getAllDeposits } from "../..";
-import { AccountMode } from "@/app/lib/types";
-import { FirebaseError } from "firebase/app";
+import { getTransactions } from "../..";
+import { AccountMode, TransactionTableCategory } from "@/app/lib/types";
 
 export async function GET(request: Request) {
   try {
@@ -13,15 +9,18 @@ export async function GET(request: Request) {
     const accountMode = url.searchParams.get(
       "accountMode"
     ) as AccountMode | null;
+    const transactionCategory = url.searchParams.get(
+      "category"
+    ) as TransactionTableCategory | null;
 
-    if (!accountMode) {
+    if (!accountMode || !transactionCategory) {
       return NextResponse.json(
-        { error: "accountMode query parameter is required" },
+        { error: "query parameters not specified. this is required" },
         { status: 400 }
       );
     }
 
-    const deposits = await getAllDeposits(accountMode, "deposits");
+    const deposits = await getTransactions(accountMode, transactionCategory);
 
     return NextResponse.json({
       data: deposits,

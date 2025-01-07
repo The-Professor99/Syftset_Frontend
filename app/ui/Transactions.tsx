@@ -52,12 +52,11 @@ export default function Transactions({
   const { data, loading, error, errorMessage } = useRemoteService<
     Transaction[]
   >({
-    url: `/api/accounts/${collectionName}?accountMode=${currentAccountMode}`,
+    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=${collectionName}`,
     initialData: [],
     dependencies: [collectionName, currentAccountMode], // Pass additional dependencies if needed
     shouldFetch: !!currentAccountMode,
   });
-  console.log(data);
 
   return (
     <DataDisplay
@@ -66,7 +65,16 @@ export default function Transactions({
       errorMessage={errorMessage || ""}
       noData={!data.length}
     >
-      <CustomizedDataGrid rows={data} columns={columns} />
+      <CustomizedDataGrid
+        rows={data}
+        columns={columns}
+        initialState={{
+          pagination: { paginationModel: { pageSize: 20 } },
+          sorting: {
+            sortModel: [{ field: "createdAt", sort: "desc" }],
+          },
+        }}
+      />
     </DataDisplay>
   );
 }
