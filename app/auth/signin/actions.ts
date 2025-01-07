@@ -2,7 +2,7 @@
 import { AuthError } from "next-auth";
 import type { AuthProvider } from "@toolpad/core";
 import { signIn as signInAction } from "../../../auth";
-import { appRoutes } from "@/app/_helpers/routes";
+import { appRoutes } from "@/app/lib/routes";
 
 async function signIn(
   provider: AuthProvider,

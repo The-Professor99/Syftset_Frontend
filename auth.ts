@@ -1,9 +1,8 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import type { Provider } from "next-auth/providers";
-import { auth as firebaseAuth } from "./firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
-import { appRoutes } from "./app/_helpers/routes";
+import { appRoutes } from "./app/lib/routes";
+import { signInWithEmailAndPassword } from "./app/lib/firebase/auth";
 
 const providers: Provider[] = [
   Credentials({
@@ -14,7 +13,6 @@ const providers: Provider[] = [
     async authorize(c) {
       try {
         const userCredential = await signInWithEmailAndPassword(
-          firebaseAuth,
           String(c.email),
           String(c.password)
         );

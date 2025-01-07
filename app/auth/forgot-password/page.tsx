@@ -5,7 +5,7 @@ import * as React from "react";
 import Link from "@mui/material/Link";
 import SitemarkIcon from "@/app/components/template_components/SitemarkIcon";
 import ForgotPasswordPage from "./components";
-import { appRoutes } from "@/app/_helpers/routes";
+import { appRoutes } from "@/app/lib/routes";
 
 function SignUpLink() {
   return (

@@ -9,6 +9,7 @@ import theme from "../theme";
 import { auth } from "../auth";
 import Link from "next/link";
 import SitemarkIcon from "./components/template_components/SitemarkIcon";
+import { MoveToInbox, Outbox } from "@mui/icons-material";
 
 const NAVIGATION: Navigation = [
   {
@@ -19,6 +20,18 @@ const NAVIGATION: Navigation = [
     title: "Dashboard",
     icon: <DashboardIcon />,
     segment: "dashboard",
+    children: [
+      {
+        title: "Deposits",
+        icon: <MoveToInbox />,
+        segment: "deposits",
+      },
+      {
+        title: "Withdrawals",
+        icon: <Outbox />,
+        segment: "withdrawals",
+      },
+    ],
   },
 ];
 
@@ -28,11 +41,7 @@ const AUTHENTICATION = {
 };
 
 const BRANDING = {
-  logo: (
-    <Link href="/">
-      <SitemarkIcon />
-    </Link>
-  ),
+  logo: <SitemarkIcon />,
   title: "Syftset",
 };
 

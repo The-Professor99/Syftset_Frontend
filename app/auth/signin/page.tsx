@@ -7,7 +7,7 @@ import { providerMap } from "../../../auth";
 import signIn from "./actions";
 import { List, ListItem, ListItemIcon, ListItemText } from "@mui/material";
 import { Password, SupportAgent } from "@mui/icons-material";
-import { appRoutes } from "@/app/_helpers/routes";
+import { appRoutes } from "@/app/lib/routes";
 
 function ForgotPasswordLink() {
   return (

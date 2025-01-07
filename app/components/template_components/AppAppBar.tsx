@@ -15,7 +15,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
 import Sitemark from "./SitemarkIcon";
 import Link from "next/link";
-import { appRoutes } from "@/app/_helpers/routes";
+import { appRoutes } from "@/app/lib/routes";
 import SidebarFooterAccount from "@/app/dashboard/SidebarFooterAccount";
 import { Dashboard } from "@mui/icons-material";
 import { useSession } from "@toolpad/core";

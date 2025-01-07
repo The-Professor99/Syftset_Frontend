@@ -1,21 +1,18 @@
 "use server";
 import type { AuthProvider } from "@toolpad/core";
-import { sendPasswordResetEmail } from "firebase/auth";
-import { auth as firebaseAuth } from "@/firebase";
-import { appRoutes } from "@/app/_helpers/routes";
+import { appRoutes } from "@/app/lib/routes";
 import { FirebaseError } from "firebase/app";
+import { sendPasswordResetEmail } from "@/app/lib/firebase/auth";
 
 async function forgotPassword(provider: AuthProvider, formData: FormData) {
   try {
     const actionCodeSettings = {
       url: `${process.env.NEXT_PUBLIC_LIVE_URL}/${appRoutes.signIn}`,
     };
-    const emailSent = await sendPasswordResetEmail(
-      firebaseAuth,
+    await sendPasswordResetEmail(
       String(formData.get("email")),
       actionCodeSettings
     );
-    console.log(emailSent);
     return {
       success:
         "Your password reset mail has been sent. Please check your spam/junk folder if you do not see it within 5minutes",
