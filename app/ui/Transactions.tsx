@@ -17,8 +17,10 @@ import DataDisplay from "./DataDisplay";
  * @returns
  */
 export default function Transactions({
+  currentAccountMode,
   collectionName,
 }: {
+  currentAccountMode: AccountMode | null;
   collectionName: TransactionTableCategory;
 }) {
   const columns = [
@@ -44,17 +46,13 @@ export default function Transactions({
       minWidth: 200,
     },
   ];
-  const [currentAccountMode] = useLocalStorageState<AccountMode>(
-    "accountMode",
-    "crypto-1"
-  );
 
   const { data, loading, error, errorMessage } = useRemoteService<
     Transaction[]
   >({
     url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=${collectionName}`,
     initialData: [],
-    dependencies: [collectionName, currentAccountMode], // Pass additional dependencies if needed
+    dependencies: [collectionName, currentAccountMode],
     shouldFetch: !!currentAccountMode,
   });
 

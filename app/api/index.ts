@@ -115,16 +115,24 @@ export async function getTransactions(
  * @param isInitialDeposit Specifies if it's the first time a user wants to make a deposit into the account.
  * @returns
  */
-export async function placeDepositRequest(
+export async function placeTransactionRequest(
   formData: FormData,
-  isInitialDeposit: boolean
+  isInitialDeposit: boolean,
+  transactionType: "deposit" | "withdrawal"
 ) {
   try {
+    console.log(transactionType);
     // Artificially delay a response for demo purposes.
     await new Promise((resolve) => setTimeout(resolve, 3000));
-    throw new Error(
-      "We are currently not accepting new investments. Please check back later. If you believe this is an error, kindly contact support for assistance."
-    );
+    if (transactionType === "deposit") {
+      throw new Error(
+        "We are currently not accepting new investments. Please check back later. If you believe this is an error, kindly contact support for assistance."
+      );
+    } else {
+      throw new Error(
+        "Currently, withdrawals can only be processed at the end of sessions. Please try again once the session has concluded. If you believe this is an error, kindly contact support for assistance."
+      );
+    }
 
     // Request will go to firestore, logic will go here. No New investments at this time
     // return {

@@ -20,18 +20,19 @@ const NAVIGATION: Navigation = [
     title: "Dashboard",
     icon: <DashboardIcon />,
     segment: "dashboard",
-    children: [
-      {
-        title: "Deposits",
-        icon: <MoveToInbox />,
-        segment: "deposits",
-      },
-      {
-        title: "Withdrawals",
-        icon: <Outbox />,
-        segment: "withdrawals",
-      },
-    ],
+  },
+  {
+    kind: "divider",
+  },
+  {
+    title: "Deposits",
+    icon: <MoveToInbox />,
+    segment: "dashboard/deposits",
+  },
+  {
+    title: "Withdrawals",
+    icon: <Outbox />,
+    segment: "dashboard/withdrawals",
   },
 ];
 
