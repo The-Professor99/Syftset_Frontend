@@ -1,10 +1,11 @@
 "use server";
 import { db } from "@/app/lib/firebase/firebase";
-import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import {
   AccountMode,
   AccountModeDetails,
+  Activity,
   Transaction,
   TransactionTableCategory,
 } from "../lib/types";
@@ -63,14 +64,15 @@ export async function getAccountModes() {
 
 export async function getTransactions(
   accountMode: AccountMode,
-  collectionName: TransactionTableCategory
+  collectionName: TransactionTableCategory,
+  limitNum: string | null
 ) {
   // const auth = getAuth();
   const userId = "hadT622IoNaDCC4mSMmYI6vdF2t2"; //auth.currentUser?.uid; console.log()
 
   try {
     if (userId) {
-      const depositsRef = collection(
+      const transactionsRef = collection(
         db,
         "users",
         userId,
@@ -78,14 +80,23 @@ export async function getTransactions(
         accountMode,
         "entries"
       );
-      const snapshot = await getDocs(depositsRef);
 
-      const deposits: Transaction[] = [];
+      const transactionsQuery = query(
+        transactionsRef,
+        orderBy("timestamp", "desc"),
+        limit(limitNum ? parseInt(limitNum) : 20)
+      );
+
+      const snapshot = await getDocs(transactionsQuery);
+
+      const transactions: (Transaction | Activity)[] = [];
       snapshot.forEach((doc) => {
-        const accountData = doc.data() as Omit<Transaction, "id">;
-        deposits.push({ id: doc.id, ...accountData });
+        const accountData = doc.data() as
+          | Omit<Transaction, "id">
+          | Omit<Activity, "id">;
+        transactions.push({ id: doc.id, ...accountData });
       });
-      // const deposits: Transaction[] = [
+      // const transactions: Transaction[] = [
       //   {
       //     id: "1",
       //     amount: 50,
@@ -94,8 +105,8 @@ export async function getTransactions(
       //     newBalance: 8,
       //   },
       // ];
-      console.log(deposits);
-      return deposits;
+      console.log(transactions);
+      return transactions;
     } else {
       throw new Error("User Id is required");
     }
@@ -104,7 +115,7 @@ export async function getTransactions(
     if (error instanceof FirebaseError || error instanceof Error) {
       throw new Error(error.message);
     } else {
-      throw new Error("Failed to fetch deposits.");
+      throw new Error(`Failed to fetch ${collectionName}.`);
     }
   }
 }
