@@ -11,6 +11,7 @@ import CustomTreeView from "../components/CustomTreeView";
 import ChartUserByCountry from "../components/ChartUserByCountry";
 import Overview from "./Overview/OverviewContent";
 import { Suspense } from "react";
+import RecentActiviesCard from "./Cards/RecentActivityCard";
 
 const data: StatCardProps[] = [
   {
@@ -78,6 +79,16 @@ export default function DashboardContent() {
               Overview
             </Typography>
             <Overview />
+            <Grid
+              container
+              spacing={2}
+              columns={12}
+              // sx={{ mb: (theme) => theme.spacing(2) }}
+            >
+              <Grid size={{ xs: 12, md: 6 }}>
+                <RecentActiviesCard />
+              </Grid>
+            </Grid>
             {/* <Grid
               container
               spacing={2}
@@ -99,9 +110,9 @@ export default function DashboardContent() {
                 <PageViewsBarChart />
               </Grid>
             </Grid> */}
-            <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
+            {/* <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
               Details
-            </Typography>
+            </Typography> */}
             {/* <Grid container spacing={2} columns={12}>
               <Grid size={{ xs: 12, lg: 6 }}>
                 <Stack gap={2} direction={{ xs: "column", sm: "row" }}>

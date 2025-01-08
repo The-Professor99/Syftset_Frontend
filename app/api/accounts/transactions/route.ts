@@ -12,6 +12,7 @@ export async function GET(request: Request) {
     const transactionCategory = url.searchParams.get(
       "category"
     ) as TransactionTableCategory | null;
+    const limitNum = url.searchParams.get("limit");
 
     if (!accountMode || !transactionCategory) {
       return NextResponse.json(
@@ -20,7 +21,11 @@ export async function GET(request: Request) {
       );
     }
 
-    const deposits = await getTransactions(accountMode, transactionCategory);
+    const deposits = await getTransactions(
+      accountMode,
+      transactionCategory,
+      limitNum
+    );
 
     return NextResponse.json({
       data: deposits,

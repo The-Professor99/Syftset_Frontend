@@ -70,7 +70,7 @@ const DataDisplay = ({
     <Paper
       className="DataDisplay"
       data-testid="DataDisplay"
-      sx={{ pt: 2, height: "100%", overflow: "hidden" }}
+      sx={{ py: 2, height: "100%", overflow: "hidden" }}
       elevation={0}
       {...others}
     >

@@ -13,16 +13,16 @@ import { MoveToInbox, Outbox } from "@mui/icons-material";
 
 const NAVIGATION: Navigation = [
   {
-    kind: "header",
-    title: "Main items",
-  },
-  {
     title: "Dashboard",
     icon: <DashboardIcon />,
     segment: "dashboard",
   },
   {
     kind: "divider",
+  },
+  {
+    kind: "header",
+    title: "Dashboard Pages",
   },
   {
     title: "Deposits",

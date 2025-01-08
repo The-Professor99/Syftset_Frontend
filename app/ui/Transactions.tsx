@@ -25,7 +25,7 @@ export default function Transactions({
 }) {
   const columns = [
     {
-      field: "createdAt",
+      field: "timestamp",
       headerName: "Date",
       flex: 1.5,
       minWidth: 200,
@@ -69,7 +69,7 @@ export default function Transactions({
         initialState={{
           pagination: { paginationModel: { pageSize: 20 } },
           sorting: {
-            sortModel: [{ field: "createdAt", sort: "desc" }],
+            sortModel: [{ field: "timestamp", sort: "desc" }],
           },
         }}
       />

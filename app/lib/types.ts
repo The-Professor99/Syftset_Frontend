@@ -24,19 +24,23 @@ export type AccountModeDetails = {
   id: string;
 };
 
+type Timestamp = {
+  seconds: number;
+  nanoseconds: number;
+};
+
 export type Transaction = {
   id: string;
   amount: number;
-  createdAt: string;
+  timestamp: Timestamp;
   prevBalance: number;
   newBalance: number;
 };
 
 export type Activity = {
   id: string;
-  createdAt: string;
   message: string;
-  timestamp: string;
+  timestamp: Timestamp;
   type: ActivityType;
 };
 
