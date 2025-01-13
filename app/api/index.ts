@@ -35,7 +35,8 @@ export async function getAccountModes() {
           accountMode: "crypto-1",
           totalDeposits: 250,
           totalWithdrawals: 0,
-          totalROI: 0,
+          referralBonus: 28,
+          uplineCommission: 89,
           totalPnL: 0,
         },
         {
@@ -45,7 +46,8 @@ export async function getAccountModes() {
           totalDeposits: 350,
           totalServiceCharges: 39,
           totalPnL: 248,
-          totalROI: 20,
+          referralBonus: 290,
+          uplineCommission: 120,
           balance: 500,
         },
       ] as AccountModeDetails[];
@@ -96,16 +98,6 @@ export async function getTransactions(
           | Omit<Activity, "id">;
         transactions.push({ id: doc.id, ...accountData });
       });
-      // const transactions: Transaction[] = [
-      //   {
-      //     id: "1",
-      //     amount: 50,
-      //     createdAt: "dlld",
-      //     prevBalance: 45,
-      //     newBalance: 8,
-      //   },
-      // ];
-      console.log(transactions);
       return transactions;
     } else {
       throw new Error("User Id is required");
