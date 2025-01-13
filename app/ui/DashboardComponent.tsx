@@ -1,3 +1,4 @@
+"use client";
 import { alpha } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid2";
@@ -9,9 +10,13 @@ import SessionsChart from "../components/SessionsChart";
 import PageViewsBarChart from "../components/PageViewsBarChart";
 import CustomTreeView from "../components/CustomTreeView";
 import ChartUserByCountry from "../components/ChartUserByCountry";
-import Overview from "./Overview/OverviewContent";
 import { Suspense } from "react";
 import RecentActiviesCard from "./Cards/RecentActivityCard";
+import PnLSummaryCard from "./Cards/PnLSummaryCard";
+import OverviewDisplay from "./Overview/OverviewDisplay";
+import { AccountMode, AccountModeDetails } from "../lib/types";
+import { useLocalStorageState } from "@toolpad/core";
+import { useRemoteService } from "../lib/hooks";
 
 const data: StatCardProps[] = [
   {
@@ -48,21 +53,37 @@ const data: StatCardProps[] = [
 ];
 
 export default function DashboardContent() {
+  const [currentAccountMode, setCurrentAccountMode] =
+    useLocalStorageState<AccountMode>("accountMode", "crypto-1");
+
+  // console.log build loading and error pages for the components dependent on this
+  const {
+    data: allAcountsDetails,
+    loading,
+    error,
+    errorMessage,
+  } = useRemoteService<AccountModeDetails[]>({
+    url: "/api/accounts/details",
+    initialData: [],
+    dependencies: [currentAccountMode],
+    shouldFetch: !!currentAccountMode,
+  });
+
+  const currentAccountDetails = allAcountsDetails.find(
+    (accountDetail) => accountDetail.accountMode === currentAccountMode
+  );
+
   return (
     <Box sx={{ display: "flex" }}>
       <Box
         component="main"
-        // sx={(theme) => ({ console.log(ToDo: make a client component for this to work)
-        //   flexGrow: 1,
-        //   backgroundColor: theme.vars
-        //     ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
-        //     : alpha(theme.palette.background.default, 1),
-        //   overflow: "auto",
-        // })}
-        sx={{
+        sx={(theme) => ({
           flexGrow: 1,
-          overflow: "auth",
-        }}
+          backgroundColor: theme.vars
+            ? `rgba(${theme.vars.palette.background.defaultChannel} / 1)`
+            : alpha(theme.palette.background.default, 1),
+          overflow: "auto",
+        })}
       >
         <Stack
           spacing={2}
@@ -78,15 +99,28 @@ export default function DashboardContent() {
             <Typography component="h2" variant="h6" sx={{ mb: 2 }}>
               Overview
             </Typography>
-            <Overview />
+            <OverviewDisplay
+              currentAccountDetails={currentAccountDetails}
+              setCurrentAccountMode={setCurrentAccountMode}
+              currentAccountMode={currentAccountMode}
+              allAcountsDetails={allAcountsDetails}
+            />
             <Grid
               container
               spacing={2}
               columns={12}
-              // sx={{ mb: (theme) => theme.spacing(2) }}
+              sx={{ mb: (theme) => theme.spacing(2) }}
             >
               <Grid size={{ xs: 12, md: 6 }}>
-                <RecentActiviesCard />
+                <RecentActiviesCard currentAccountMode={currentAccountMode} />
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <PnLSummaryCard
+                  loading={loading}
+                  error={error}
+                  errorMessage={errorMessage}
+                  currentAccountDetails={currentAccountDetails}
+                />
               </Grid>
             </Grid>
             {/* <Grid

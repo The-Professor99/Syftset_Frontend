@@ -8,16 +8,18 @@ import { AccountBalance, Download, Upload } from "@mui/icons-material";
 import { appRoutes } from "@/app/lib/routes";
 
 export default function OverviewDisplay({
-  accountsDetails,
+  allAcountsDetails,
+  currentAccountMode,
+  setCurrentAccountMode,
+  currentAccountDetails,
 }: {
-  accountsDetails: AccountModeDetails[];
+  allAcountsDetails: AccountModeDetails[];
+  currentAccountMode: AccountMode | null;
+  setCurrentAccountMode: React.Dispatch<
+    React.SetStateAction<AccountMode | null>
+  >;
+  currentAccountDetails?: AccountModeDetails;
 }) {
-  const [currentAccountMode, setCurrentAccountMode] =
-    useLocalStorageState<AccountMode>("accountMode", "crypto-1");
-  const currentAccountDetails = accountsDetails.find(
-    (accountDetail) => accountDetail.accountMode === currentAccountMode
-  );
-
   return (
     <Grid
       container
@@ -30,7 +32,7 @@ export default function OverviewDisplay({
         <AccountModesDisplay
           currentAccountMode={currentAccountMode}
           setCurrentAccountMode={setCurrentAccountMode}
-          accountsDetails={accountsDetails}
+          accountsDetails={allAcountsDetails}
         />
       </Grid>
       <Grid size={{ xs: 12, sm: 6, lg: 3 }}>

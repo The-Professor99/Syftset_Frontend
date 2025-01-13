@@ -18,10 +18,11 @@ export type AccountModeDetails = {
   balance: number;
   totalDeposits: number;
   totalWithdrawals: number;
-  totalROI: number;
   totalPnL: number;
   totalServiceCharges: number;
   id: string;
+  referralBonus?: number;
+  uplineCommission?: number;
 };
 
 type Timestamp = {

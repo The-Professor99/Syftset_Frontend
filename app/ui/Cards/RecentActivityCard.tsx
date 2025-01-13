@@ -1,22 +1,19 @@
-"use client";
 import CustomizedDataGrid from "@/app/components/CustomDataGrid";
 import { useRemoteService } from "@/app/lib/hooks";
 import { AccountMode, Activity, ActivityType } from "@/app/lib/types";
 import { Card, CardContent, Chip, Typography, useTheme } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
-import { useLocalStorageState } from "@toolpad/core";
 import DataDisplay from "../DataDisplay";
 
-export default function RecentActiviesCard() {
+export default function RecentActiviesCard({
+  currentAccountMode,
+}: {
+  currentAccountMode: AccountMode | null;
+}) {
   const theme = useTheme();
 
-  const [currentAccountMode] = useLocalStorageState<AccountMode>(
-    "accountMode",
-    "crypto-1"
-  );
-
   const { data, loading, error, errorMessage } = useRemoteService<Activity[]>({
-    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=recent_activities&limit=6`,
+    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=recent_activities&limit=10`,
     initialData: [],
     dependencies: [currentAccountMode],
     shouldFetch: !!currentAccountMode,
@@ -48,8 +45,9 @@ export default function RecentActiviesCard() {
         sx={{
           display: "flex",
           flexDirection: "column",
-          justifyContent: "space-between",
           height: "100%",
+          justifyContent: !data.length ? "space-between" : "initial",
+          gap: theme.spacing(1),
         }}
       >
         <Typography
@@ -68,7 +66,7 @@ export default function RecentActiviesCard() {
           noDataText="No recent activity!"
         >
           <CustomizedDataGrid
-            rows={data.slice(0, 6)}
+            rows={data}
             columns={columns}
             hideFooter
             initialState={{

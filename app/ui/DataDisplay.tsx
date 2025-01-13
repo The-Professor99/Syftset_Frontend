@@ -24,7 +24,7 @@ const DataDisplay = ({
   errorMessage = "An error occurred while fetching data.",
   ...others
 }: DataDisplayProps) => {
-  if (!noData) {
+  if (!noData && !loading) {
     // Render children if there's data
     return children ? <>{children}</> : null;
   }
