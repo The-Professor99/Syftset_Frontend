@@ -6,6 +6,7 @@ import {
   AccountMode,
   AccountModeDetails,
   Activity,
+  GlobalSessionDetail,
   Transaction,
   TransactionTableCategory,
 } from "../lib/types";
@@ -38,6 +39,7 @@ export async function getAccountModes() {
           referralBonus: 28,
           uplineCommission: 89,
           totalPnL: 0,
+          managementFee: 394,
         },
         {
           id: "forex-1",
@@ -155,5 +157,126 @@ export async function placeTransactionRequest(
       type: "UnknownError",
       success: "",
     };
+  }
+}
+
+export async function getGlobalSessions(accountMode: AccountMode) {
+  try {
+    // const sessionsRef = collection(db, "global", "sessions", accountMode);
+
+    // const sessionQuery = query(
+    //   sessionsRef,
+    //   orderBy("startDate", "desc"),
+    //   limit(20)
+    // );
+
+    // const snapshot = await getDocs(sessionQuery);
+
+    // const globalSessions: GlobalSessionDetail[] = [];
+    // snapshot.forEach((doc) => {
+    //   const accountData = doc.data() as Omit<GlobalSessionDetail, "id">;
+    //   globalSessions.push({ id: doc.id, ...accountData });
+    // });
+
+    const globalSessions: GlobalSessionDetail[] = [
+      {
+        id: "dksl",
+        sessionId: "session_1",
+        startDate: {
+          seconds: 10938323898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938383898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: -4.1,
+        ethPercentageChange: 0.11,
+        roi: -4.58,
+      },
+      {
+        id: "dksl",
+        sessionId: "session_2",
+        startDate: {
+          seconds: 10938423898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938483898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: 11.2,
+        ethPercentageChange: 5.09,
+        roi: 9.71,
+      },
+      {
+        id: "dksl",
+        sessionId: "session_3",
+        startDate: {
+          seconds: 10938523898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938583898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: -14.11,
+        ethPercentageChange: -12.69,
+        roi: 33.761,
+      },
+      {
+        id: "dksl",
+        sessionId: "session_4",
+        startDate: {
+          seconds: 10938623898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938683898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: -2.04,
+        ethPercentageChange: -9.78,
+        roi: 13.66,
+      },
+      {
+        id: "dksl",
+        sessionId: "session_5",
+        startDate: {
+          seconds: 10938723898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938783898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: 38.03,
+        ethPercentageChange: 29.56,
+        roi: 106.58,
+      },
+      {
+        id: "dksl",
+        sessionId: "session_6",
+        startDate: {
+          seconds: 10938823898,
+          nanoseconds: 0,
+        },
+        endDate: {
+          seconds: 10938883898,
+          nanoseconds: 0,
+        },
+        btcPercentageChange: 12.6,
+        ethPercentageChange: 22.4,
+        roi: -6.56,
+      },
+    ];
+    return globalSessions;
+  } catch (error) {
+    console.error("Database Error:", error);
+    if (error instanceof FirebaseError || error instanceof Error) {
+      throw new Error(error.message);
+    } else {
+      throw new Error(`Failed to fetch sessions.`);
+    }
   }
 }

@@ -23,6 +23,7 @@ export type AccountModeDetails = {
   id: string;
   referralBonus?: number;
   uplineCommission?: number;
+  managementFee?: number;
 };
 
 type Timestamp = {
@@ -49,3 +50,19 @@ export type TransactionTableCategory =
   | "deposits"
   | "withdrawals"
   | "recent_activities";
+
+export type GlobalSessionDetail = {
+  id: string;
+  sessionId: string;
+  startDate: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  endDate: {
+    seconds: number;
+    nanoseconds: number;
+  };
+  btcPercentageChange?: number;
+  ethPercentageChange?: number;
+  roi: number;
+};

@@ -17,6 +17,7 @@ import OverviewDisplay from "./Overview/OverviewDisplay";
 import { AccountMode, AccountModeDetails } from "../lib/types";
 import { useLocalStorageState } from "@toolpad/core";
 import { useRemoteService } from "../lib/hooks";
+import SessionsPerformanceCard from "./Cards/SessionsPerformanceCard";
 
 const data: StatCardProps[] = [
   {
@@ -120,6 +121,11 @@ export default function DashboardContent() {
                   error={error}
                   errorMessage={errorMessage}
                   currentAccountDetails={currentAccountDetails}
+                />
+              </Grid>
+              <Grid size={{ xs: 12, md: 6 }}>
+                <SessionsPerformanceCard
+                  currentAccountMode={currentAccountMode}
                 />
               </Grid>
             </Grid>

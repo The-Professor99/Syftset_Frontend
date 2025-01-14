@@ -11,7 +11,12 @@ import Stack from "@mui/material/Stack";
 import DataDisplay from "../DataDisplay";
 import { AccountModeDetails } from "@/app/lib/types";
 import { fShortenNumber } from "@/app/lib/utils";
-import { Handshake, Insights, RequestQuote } from "@mui/icons-material";
+import {
+  AccountBalance,
+  Handshake,
+  Insights,
+  RequestQuote,
+} from "@mui/icons-material";
 
 interface StyledTextProps {
   variant: "primary" | "secondary";
@@ -119,10 +124,19 @@ const processData = (data: AccountModeDetails | undefined) => {
       icon: <Insights />,
     },
     {
-      name: "Management Fees",
+      name: "Trading Fee",
       value: `$${data.totalServiceCharges}`,
       icon: <RequestQuote />,
     },
+    ...(data.managementFee
+      ? [
+          {
+            name: "Management Fee",
+            value: `$${data.managementFee}`,
+            icon: <AccountBalance />,
+          },
+        ]
+      : []),
     ...(data.uplineCommission
       ? [
           {
