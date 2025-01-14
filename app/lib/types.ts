@@ -49,7 +49,8 @@ export type Activity = {
 export type TransactionTableCategory =
   | "deposits"
   | "withdrawals"
-  | "recent_activities";
+  | "recent_activities"
+  | "session_details";
 
 export type GlobalSessionDetail = {
   id: string;
@@ -65,4 +66,15 @@ export type GlobalSessionDetail = {
   btcPercentageChange?: number;
   ethPercentageChange?: number;
   roi: number;
+};
+
+export type UserSessionDetail = {
+  sessionId: string;
+  startingBalance: number;
+  pnl: number;
+  serviceCharge: number;
+  managementFee?: number;
+  referralBonus?: number;
+  uplineCommission?: number;
+  id: string;
 };

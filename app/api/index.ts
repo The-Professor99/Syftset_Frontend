@@ -9,6 +9,7 @@ import {
   GlobalSessionDetail,
   Transaction,
   TransactionTableCategory,
+  UserSessionDetail,
 } from "../lib/types";
 import { FirebaseError } from "firebase/app";
 
@@ -93,11 +94,12 @@ export async function getTransactions(
 
       const snapshot = await getDocs(transactionsQuery);
 
-      const transactions: (Transaction | Activity)[] = [];
+      const transactions: (Transaction | Activity | UserSessionDetail)[] = [];
       snapshot.forEach((doc) => {
         const accountData = doc.data() as
           | Omit<Transaction, "id">
-          | Omit<Activity, "id">;
+          | Omit<Activity, "id">
+          | Omit<UserSessionDetail, "id">;
         transactions.push({ id: doc.id, ...accountData });
       });
       return transactions;
@@ -167,7 +169,6 @@ export async function getGlobalSessions(accountMode: AccountMode) {
     // const sessionQuery = query(
     //   sessionsRef,
     //   orderBy("startDate", "desc"),
-    //   limit(20)
     // );
 
     // const snapshot = await getDocs(sessionQuery);

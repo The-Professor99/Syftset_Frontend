@@ -119,15 +119,17 @@ export default function SessionsPerformanceCard({
             <Typography variant="h4" component="p">
               Average ROI
             </Typography>
-            <Chip
-              size="small"
-              color={roundedAverageROI > 0 ? "success" : "error"}
-              label={
-                roundedAverageROI > 0
-                  ? `+${roundedAverageROI}%`
-                  : `${roundedAverageROI}%`
-              }
-            />
+            {roundedAverageROI ? (
+              <Chip
+                size="small"
+                color={roundedAverageROI > 0 ? "success" : "error"}
+                label={
+                  roundedAverageROI > 0
+                    ? `+${roundedAverageROI}%`
+                    : `${roundedAverageROI}%`
+                }
+              />
+            ) : null}
           </Stack>
           <Typography variant="caption" sx={{ color: "text.secondary" }}>
             {btcMovement.length && ethMovement.length

@@ -75,6 +75,7 @@ export default function RecentActiviesCard({
                 sortModel: [{ field: "timestamp", sort: "desc" }],
               },
             }}
+            density="standard"
           />
         </DataDisplay>
       </CardContent>

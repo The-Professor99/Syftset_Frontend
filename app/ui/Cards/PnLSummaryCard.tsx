@@ -188,6 +188,12 @@ export default function PnLSummaryCard({
         <Typography component="h2" variant="subtitle2">
           Earnings Summary
         </Typography>
+        <Stack sx={{ justifyContent: "space-between" }}>
+          <Typography variant="caption" sx={{ color: "text.secondary" }}>
+            Your cumulative earnings across all sessions
+          </Typography>
+        </Stack>
+
         <DataDisplay
           loading={loading}
           error={error}
