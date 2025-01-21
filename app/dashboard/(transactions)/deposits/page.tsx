@@ -29,7 +29,7 @@ export default function DepositsPage() {
         </Button>
       </Box>
       <Transactions
-        collectionName="deposits"
+        collectionName="deposit"
         currentAccountMode={currentAccountMode}
       />
 

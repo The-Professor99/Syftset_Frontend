@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { getTransactions } from "../..";
-import { AccountMode, TransactionTableCategory } from "@/app/lib/types";
+import { AccountMode, ActivityType } from "@/app/lib/types";
 
 export async function GET(request: Request) {
   try {
@@ -11,7 +11,7 @@ export async function GET(request: Request) {
     ) as AccountMode | null;
     const transactionCategory = url.searchParams.get(
       "category"
-    ) as TransactionTableCategory | null;
+    ) as ActivityType | null;
     const limitNum = url.searchParams.get("limit");
 
     if (!accountMode || !transactionCategory) {

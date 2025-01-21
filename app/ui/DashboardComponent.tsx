@@ -31,7 +31,7 @@ export default function DashboardContent() {
   });
 
   const currentAccountDetails = allAcountsDetails.find(
-    (accountDetail) => accountDetail.accountMode === currentAccountMode
+    (accountDetail) => accountDetail.account_type === currentAccountMode
   );
 
   return (
@@ -72,7 +72,14 @@ export default function DashboardContent() {
               sx={{ mb: (theme) => theme.spacing(2) }}
             >
               <Grid size={{ xs: 12, md: 6 }}>
-                <RecentActiviesCard currentAccountMode={currentAccountMode} />
+                <RecentActiviesCard
+                  loading={loading}
+                  error={error}
+                  errorMessage={errorMessage}
+                  recentActivities={
+                    currentAccountDetails?.recent_activities || []
+                  }
+                />
               </Grid>
               <Grid size={{ xs: 12, md: 6 }}>
                 <PnLSummaryCard

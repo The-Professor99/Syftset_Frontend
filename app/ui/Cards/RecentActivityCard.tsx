@@ -1,23 +1,22 @@
 import CustomizedDataGrid from "@/app/components/CustomDataGrid";
-import { useRemoteService } from "@/app/lib/hooks";
-import { AccountMode, Activity, ActivityType } from "@/app/lib/types";
-import { Card, CardContent, Chip, Typography, useTheme } from "@mui/material";
+import { Activity, ActivityType } from "@/app/lib/types";
+import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import DataDisplay from "../DataDisplay";
+import { renderTransactionType } from "../Transactions";
 
 export default function RecentActiviesCard({
-  currentAccountMode,
+  loading,
+  error,
+  errorMessage,
+  recentActivities,
 }: {
-  currentAccountMode: AccountMode | null;
+  loading: boolean;
+  error: boolean;
+  errorMessage: string | null;
+  recentActivities: Activity[];
 }) {
   const theme = useTheme();
-
-  const { data, loading, error, errorMessage } = useRemoteService<Activity[]>({
-    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=recent_activities&limit=10`,
-    initialData: [],
-    dependencies: [currentAccountMode],
-    shouldFetch: !!currentAccountMode,
-  });
 
   const columns: GridColDef[] = [
     {
@@ -29,14 +28,14 @@ export default function RecentActiviesCard({
         new Date(row.timestamp.seconds * 1000).toDateString(),
     },
     {
-      field: "type",
+      field: "activity_type",
       headerName: "Activity Type",
       flex: 0.5,
       minWidth: 150,
       renderCell: (params) =>
         renderTransactionType(params.value as ActivityType),
     },
-    { field: "message", headerName: "Activity", flex: 1.5, minWidth: 250 },
+    { field: "description", headerName: "Activity", flex: 1.5, minWidth: 400 },
   ];
 
   return (
@@ -46,7 +45,9 @@ export default function RecentActiviesCard({
           display: "flex",
           flexDirection: "column",
           height: "100%",
-          justifyContent: !data.length ? "space-between" : "initial",
+          justifyContent: !recentActivities.length
+            ? "space-between"
+            : "initial",
           gap: theme.spacing(1),
         }}
       >
@@ -62,11 +63,11 @@ export default function RecentActiviesCard({
           loading={loading}
           error={error}
           errorMessage={errorMessage || ""}
-          noData={!data.length}
+          noData={!recentActivities.length}
           noDataText="No recent activity!"
         >
           <CustomizedDataGrid
-            rows={data}
+            rows={recentActivities}
             columns={columns}
             hideFooter
             initialState={{
@@ -80,27 +81,5 @@ export default function RecentActiviesCard({
         </DataDisplay>
       </CardContent>
     </Card>
-  );
-}
-
-function renderTransactionType(transactionType: ActivityType) {
-  const colors: { [index: string]: "success" | "error" | "primary" } = {
-    deposit: "success",
-    withdrawal: "error",
-    sessionUpdate: "primary",
-  };
-  const namingMap = {
-    deposit: "Deposit",
-    withdrawal: "Withdrawal",
-    sessionUpdate: "Session Update",
-  };
-
-  console.log(transactionType);
-  return (
-    <Chip
-      label={namingMap[transactionType]}
-      color={colors[transactionType]}
-      size="small"
-    />
   );
 }

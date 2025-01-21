@@ -5,55 +5,29 @@ import { getAuth } from "firebase/auth";
 import {
   AccountMode,
   AccountModeDetails,
-  Activity,
+  ActivityType,
   GlobalSessionDetail,
   Transaction,
-  TransactionTableCategory,
   UserSessionDetail,
 } from "../lib/types";
 import { FirebaseError } from "firebase/app";
 
+const dummyUID = "5f57d2ee-19ba-4b88-a8b6-921d810c6cf3";
 export async function getAccountModes() {
-  const userId = "hadT622IoNaDCC4mSMmYI6vdF2t2"; //auth.currentUser?.uid; console.log()
+  const userId = dummyUID; //auth.currentUser?.uid; console.log()
 
   try {
     if (userId) {
-      // const accountsRef = collection(db, "users", userId, "accounts");
-      // const snapshot = await getDocs(accountsRef);
+      const accountsRef = collection(db, "users", userId, "accounts");
+      const snapshot = await getDocs(accountsRef);
 
-      // const modes: AccountModeDetails[] = [];
-      // snapshot.forEach((doc) => {
-      //   const accountData = doc.data() as Omit<AccountModeDetails, "id">;
-      //   modes.push({ id: doc.id, ...accountData });
-      // });
-      // console.log(modes);
-      // return modes;
+      const modes: AccountModeDetails[] = [];
+      snapshot.forEach((doc) => {
+        const accountData = doc.data() as Omit<AccountModeDetails, "id">;
+        modes.push({ id: doc.id, ...accountData });
+      });
 
-      return [
-        {
-          id: "crypto-1",
-          balance: 250,
-          totalServiceCharges: 0,
-          accountMode: "crypto-1",
-          totalDeposits: 250,
-          totalWithdrawals: 0,
-          referralBonus: 28,
-          uplineCommission: 89,
-          totalPnL: 0,
-          managementFee: 394,
-        },
-        {
-          id: "forex-1",
-          accountMode: "forex-1",
-          totalWithdrawals: 120,
-          totalDeposits: 350,
-          totalServiceCharges: 39,
-          totalPnL: 248,
-          referralBonus: 290,
-          uplineCommission: 120,
-          balance: 500,
-        },
-      ] as AccountModeDetails[];
+      return modes;
     } else {
       throw new Error("User Id is required");
     }
@@ -69,11 +43,11 @@ export async function getAccountModes() {
 
 export async function getTransactions(
   accountMode: AccountMode,
-  collectionName: TransactionTableCategory,
+  collectionName: ActivityType,
   limitNum: string | null
 ) {
   // const auth = getAuth();
-  const userId = "hadT622IoNaDCC4mSMmYI6vdF2t2"; //auth.currentUser?.uid; console.log()
+  const userId = dummyUID; //auth.currentUser?.uid; console.log()
 
   try {
     if (userId) {
@@ -94,11 +68,10 @@ export async function getTransactions(
 
       const snapshot = await getDocs(transactionsQuery);
 
-      const transactions: (Transaction | Activity | UserSessionDetail)[] = [];
+      const transactions: (Transaction | UserSessionDetail)[] = [];
       snapshot.forEach((doc) => {
         const accountData = doc.data() as
           | Omit<Transaction, "id">
-          | Omit<Activity, "id">
           | Omit<UserSessionDetail, "id">;
         transactions.push({ id: doc.id, ...accountData });
       });
@@ -128,7 +101,6 @@ export async function placeTransactionRequest(
   transactionType: "deposit" | "withdrawal"
 ) {
   try {
-    console.log(transactionType);
     // Artificially delay a response for demo purposes.
     await new Promise((resolve) => setTimeout(resolve, 3000));
     if (transactionType === "deposit") {
@@ -164,113 +136,18 @@ export async function placeTransactionRequest(
 
 export async function getGlobalSessions(accountMode: AccountMode) {
   try {
-    // const sessionsRef = collection(db, "global", "sessions", accountMode);
+    const sessionsRef = collection(db, "sessions", accountMode, "entries");
 
-    // const sessionQuery = query(
-    //   sessionsRef,
-    //   orderBy("startDate", "desc"),
-    // );
+    const sessionQuery = query(sessionsRef, orderBy("start_date", "desc"));
 
-    // const snapshot = await getDocs(sessionQuery);
+    const snapshot = await getDocs(sessionQuery);
 
-    // const globalSessions: GlobalSessionDetail[] = [];
-    // snapshot.forEach((doc) => {
-    //   const accountData = doc.data() as Omit<GlobalSessionDetail, "id">;
-    //   globalSessions.push({ id: doc.id, ...accountData });
-    // });
+    const globalSessions: GlobalSessionDetail[] = [];
+    snapshot.forEach((doc) => {
+      const accountData = doc.data() as Omit<GlobalSessionDetail, "id">;
+      globalSessions.push({ id: doc.id, ...accountData });
+    });
 
-    const globalSessions: GlobalSessionDetail[] = [
-      {
-        id: "dksl",
-        sessionId: "session_1",
-        startDate: {
-          seconds: 10938323898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938383898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: -4.1,
-        ethPercentageChange: 0.11,
-        roi: -4.58,
-      },
-      {
-        id: "dksl",
-        sessionId: "session_2",
-        startDate: {
-          seconds: 10938423898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938483898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: 11.2,
-        ethPercentageChange: 5.09,
-        roi: 9.71,
-      },
-      {
-        id: "dksl",
-        sessionId: "session_3",
-        startDate: {
-          seconds: 10938523898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938583898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: -14.11,
-        ethPercentageChange: -12.69,
-        roi: 33.761,
-      },
-      {
-        id: "dksl",
-        sessionId: "session_4",
-        startDate: {
-          seconds: 10938623898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938683898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: -2.04,
-        ethPercentageChange: -9.78,
-        roi: 13.66,
-      },
-      {
-        id: "dksl",
-        sessionId: "session_5",
-        startDate: {
-          seconds: 10938723898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938783898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: 38.03,
-        ethPercentageChange: 29.56,
-        roi: 106.58,
-      },
-      {
-        id: "dksl",
-        sessionId: "session_6",
-        startDate: {
-          seconds: 10938823898,
-          nanoseconds: 0,
-        },
-        endDate: {
-          seconds: 10938883898,
-          nanoseconds: 0,
-        },
-        btcPercentageChange: 12.6,
-        ethPercentageChange: 22.4,
-        roi: -6.56,
-      },
-    ];
     return globalSessions;
   } catch (error) {
     console.error("Database Error:", error);

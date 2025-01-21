@@ -27,7 +27,7 @@ export default function Page() {
         </Button>
       </Box>
       <Transactions
-        collectionName="withdrawals"
+        collectionName="withdrawal"
         currentAccountMode={currentAccountMode}
       />
 

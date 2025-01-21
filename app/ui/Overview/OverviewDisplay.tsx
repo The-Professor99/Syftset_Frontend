@@ -1,11 +1,12 @@
 "use client";
 import { AccountMode, AccountModeDetails } from "@/app/lib/types";
 import AccountModesDisplay from "../AccountModesDisplay";
-import { Grid2 as Grid } from "@mui/material";
+import { Grid2 as Grid, Typography } from "@mui/material";
 import OverviewCard from "../Cards/OverviewCard";
 import { useLocalStorageState } from "@toolpad/core";
 import { AccountBalance, Download, Upload } from "@mui/icons-material";
 import { appRoutes } from "@/app/lib/routes";
+import { fShortenNumber } from "@/app/lib/utils";
 
 export default function OverviewDisplay({
   allAcountsDetails,
@@ -40,10 +41,16 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Account Balance",
-            value: `$${currentAccountDetails?.balance || 0}`,
+            value: `$${fShortenNumber(currentAccountDetails?.balance || 0)}`,
           }}
           slots={{
             icon: <AccountBalance />,
+            actionButton: currentAccountDetails?.referral_earnings ? (
+              <Typography variant="body2" color="text.secondary">
+                Referral Earning: $
+                {fShortenNumber(currentAccountDetails.referral_earnings)}
+              </Typography>
+            ) : null,
           }}
         />
       </Grid>
@@ -52,7 +59,7 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Total Deposit",
-            value: `$${currentAccountDetails?.totalDeposits || 0}`,
+            value: `$${fShortenNumber(currentAccountDetails?.total_deposits || 0)}`,
             button: {
               text: "View Deposits",
               link: appRoutes.deposits,
@@ -77,7 +84,7 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Total Withdrawals",
-            value: `$${currentAccountDetails?.totalWithdrawals || 0}`,
+            value: `$${fShortenNumber(currentAccountDetails?.total_withdrawals || 0)}`,
             button: {
               text: "View Withdrawals",
               link: appRoutes.withdrawals,

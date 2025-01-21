@@ -13,7 +13,7 @@ import {
   Grid2 as Grid,
   IconButton,
 } from "@mui/material";
-import { AccountMode, UserSessionDetail } from "@/app/lib/types";
+import { AccountMode, ActivityType, UserSessionDetail } from "@/app/lib/types";
 import SlideWrapper from "../SlideWrapper";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useRemoteService } from "@/app/lib/hooks";
@@ -58,7 +58,9 @@ export default function UserSessionsCard({
     (theme.vars || theme).palette.primary.main,
     (theme.vars || theme).palette.primary.light,
   ];
-  const [selectedItemIndex, setSelectedItemIndex] = React.useState<number>(0);
+  const [selectedItemIndex, setSelectedItemIndex] = React.useState<
+    number | undefined
+  >();
   const [itemDisplay, setItemDisplay] = React.useState<
     UserSessionDetail | undefined
   >();
@@ -66,10 +68,11 @@ export default function UserSessionsCard({
     "earnings" | "deductions"
   >("earnings");
 
+  const category: ActivityType = "sessions";
   const { data, loading, error, errorMessage } = useRemoteService<
     UserSessionDetail[]
   >({
-    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=session_details&limit=10`,
+    url: `/api/accounts/transactions?accountMode=${currentAccountMode}&category=${category}&limit=10`,
     initialData: [],
     dependencies: [currentAccountMode],
     shouldFetch: !!currentAccountMode,
@@ -87,7 +90,9 @@ export default function UserSessionsCard({
 
   React.useEffect(() => {
     const setupDetails = () => {
-      setItemDisplay(data[selectedItemIndex]);
+      if (typeof selectedItemIndex !== "undefined") {
+        setItemDisplay(data[selectedItemIndex]);
+      }
     };
 
     setupDetails();
@@ -124,12 +129,12 @@ export default function UserSessionsCard({
           <BarChart
             borderRadius={8}
             colors={colorPalette}
-            dataset={data}
+            dataset={data.map(({ timestamp, ...rest }) => rest)} // Timestamp isn't compatible with required types
             xAxis={
               [
                 {
                   scaleType: "band",
-                  dataKey: "sessionId",
+                  dataKey: "id",
                   categoryGapRatio: getGapRation(data.length),
                   valueFormatter: (value: string) =>
                     capitalize(value.replace("_", " ")),
@@ -138,15 +143,15 @@ export default function UserSessionsCard({
             }
             series={[
               {
-                dataKey: "startingBalance",
+                dataKey: "starting_balance",
                 label: "Starting Balance",
                 stack: "A",
               },
               { dataKey: "pnl", label: "PnL", stack: "A" },
-              ...(data[0]?.referralBonus
+              ...(data[0]?.referral_bonus
                 ? [
                     {
-                      dataKey: "referralBonus",
+                      dataKey: "referral_bonus",
                       label: "Referral Bonus",
                       stack: "A",
                     },
@@ -169,7 +174,7 @@ export default function UserSessionsCard({
               <Divider sx={{ my: theme.spacing(2) }} />
               <Box sx={{ position: "relative" }}>
                 <Typography variant="h6" gutterBottom>
-                  {capitalize(itemDisplay.sessionId.replace("_", " "))} Details
+                  {capitalize(itemDisplay.id.replace("_", " "))} Details
                 </Typography>
 
                 <SlideWrapper in={shownDetail === "earnings"}>
@@ -186,13 +191,13 @@ export default function UserSessionsCard({
                     >
                       <DisplayMetric
                         label="Starting Balance"
-                        value={itemDisplay.startingBalance}
+                        value={itemDisplay.starting_balance}
                       />
                       <DisplayMetric label="PnL" value={itemDisplay?.pnl} />
-                      {itemDisplay.referralBonus ? (
+                      {itemDisplay.referral_bonus ? (
                         <DisplayMetric
                           label="Referral Bonus"
-                          value={itemDisplay.referralBonus}
+                          value={itemDisplay.referral_bonus}
                         />
                       ) : null}
                     </Grid>
@@ -216,18 +221,12 @@ export default function UserSessionsCard({
                     >
                       <DisplayMetric
                         label="Trading Fee"
-                        value={itemDisplay.serviceCharge}
+                        value={itemDisplay.trading_fee}
                       />
-                      {itemDisplay.managementFee ? (
-                        <DisplayMetric
-                          label="Management Fee"
-                          value={itemDisplay.managementFee}
-                        />
-                      ) : null}
-                      {itemDisplay.uplineCommission ? (
+                      {itemDisplay.upline_commission ? (
                         <DisplayMetric
                           label="Upline Commission"
-                          value={itemDisplay.uplineCommission}
+                          value={itemDisplay.upline_commission}
                         />
                       ) : null}
                     </Grid>

@@ -1,15 +1,47 @@
 "use client";
-import {
-  AccountMode,
-  Transaction,
-  TransactionTableCategory,
-} from "@/app/lib/types";
-import { useLocalStorageState } from "@toolpad/core";
+import { AccountMode, ActivityType, Transaction } from "@/app/lib/types";
 import React from "react";
 import CustomizedDataGrid from "@/app/components/CustomDataGrid";
 import { GridColDef } from "@mui/x-data-grid";
 import { useRemoteService } from "../lib/hooks";
 import DataDisplay from "./DataDisplay";
+import { capitalize, Chip } from "@mui/material";
+
+export function renderTransactionType(transactionType: ActivityType) {
+  const colors: {
+    [index: string]:
+      | "default"
+      | "primary"
+      | "secondary"
+      | "error"
+      | "info"
+      | "success"
+      | "warning";
+  } = {
+    deposit: "success",
+    trading_outcome: "secondary",
+    referral_bonus: "secondary",
+    withdrawal: "error",
+    upline_commission: "warning",
+    management_fee: "warning",
+    trading_fee: "default",
+  };
+
+  const variants: { [index: string]: "outlined" } = {
+    trading_outcome: "outlined",
+    withdrawal: "outlined",
+    upline_commission: "outlined",
+  };
+
+  return (
+    <Chip
+      label={capitalize(transactionType.replace("_", " "))}
+      color={colors[transactionType]}
+      variant={variants[transactionType] || "filled"}
+      size="small"
+    />
+  );
+}
 
 /**
  *
@@ -21,9 +53,9 @@ export default function Transactions({
   collectionName,
 }: {
   currentAccountMode: AccountMode | null;
-  collectionName: TransactionTableCategory;
+  collectionName: ActivityType;
 }) {
-  const columns = [
+  const columns: GridColDef[] = [
     {
       field: "timestamp",
       headerName: "Date",
@@ -33,14 +65,22 @@ export default function Transactions({
         new Date(row.timestamp.seconds * 1000).toDateString(),
     },
     {
-      field: "prevBalance",
+      field: "transaction_type",
+      headerName: "Transaction Type",
+      flex: 0.5,
+      minWidth: 150,
+      renderCell: (params) =>
+        renderTransactionType(params.value as ActivityType),
+    },
+    {
+      field: "prev_balance",
       headerName: "Previous Balance",
       flex: 1.5,
       minWidth: 200,
     },
     { field: "amount", headerName: "Amount", flex: 1.5, minWidth: 200 },
     {
-      field: "newBalance",
+      field: "new_balance",
       headerName: "New Balance",
       flex: 1.5,
       minWidth: 200,

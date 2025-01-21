@@ -31,24 +31,24 @@ const processData = (data: GlobalSessionDetail[]) => {
   const xAxisData: string[] = [];
   data.forEach((sessionDetail) => {
     const startDate = new Date(
-      sessionDetail.startDate.seconds * 1000
+      sessionDetail.start_date.seconds * 1000
     ).toLocaleDateString();
     const endDate = new Date(
-      sessionDetail.endDate.seconds * 1000
+      sessionDetail.end_date.seconds * 1000
     ).toLocaleDateString();
-    const sessionId = sessionDetail.sessionId.replace("_", " ");
+    const sessionId = sessionDetail.id.replace("_", " ");
 
     const formattedSessionDetail = capitalize(
       `${sessionId} (${startDate} - ${endDate})`
     );
 
-    roi.push(sessionDetail.roi);
+    roi.push(sessionDetail.profit_percentage);
     if (
-      sessionDetail.btcPercentageChange &&
-      sessionDetail.ethPercentageChange
+      sessionDetail.btc_percentage_change &&
+      sessionDetail.eth_percentage_change
     ) {
-      btcMovement.push(sessionDetail.btcPercentageChange);
-      ethMovement.push(sessionDetail.ethPercentageChange);
+      btcMovement.push(sessionDetail.btc_percentage_change);
+      ethMovement.push(sessionDetail.eth_percentage_change);
     }
 
     xAxisData.push(formattedSessionDetail);

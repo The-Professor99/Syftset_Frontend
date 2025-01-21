@@ -98,20 +98,20 @@ const processData = (data: AccountModeDetails | undefined) => {
     };
   }
 
-  const totalEarnings = data.referralBonus
-    ? data.totalPnL + data.referralBonus
-    : data.totalPnL;
+  const totalEarnings = data.total_referral_earnings
+    ? data.total_pnl + data.total_referral_earnings
+    : data.total_pnl;
   const formattedEarnings = fShortenNumber(totalEarnings);
-  const roi = (data.totalPnL / data.totalDeposits) * 100;
+  const roi = (data.total_pnl / data.total_deposits) * 100 || 0;
   const roundedROI = Math.round(roi * 100) / 100; // rounded to 2 decimal places
 
   const pieData = [
-    { label: "Total PnL", value: data.totalPnL },
-    ...(data.referralBonus
+    { label: "Total PnL", value: data.total_pnl },
+    ...(data.total_referral_earnings
       ? [
           {
             label: "Referral Bonus",
-            value: data.referralBonus,
+            value: data.total_referral_earnings,
           },
         ]
       : []),
@@ -125,23 +125,23 @@ const processData = (data: AccountModeDetails | undefined) => {
     },
     {
       name: "Trading Fee",
-      value: `$${data.totalServiceCharges}`,
+      value: `$${data.total_trading_fee}`,
       icon: <RequestQuote />,
     },
-    ...(data.managementFee
+    ...(data.total_management_fee
       ? [
           {
             name: "Management Fee",
-            value: `$${data.managementFee}`,
+            value: `$${data.total_management_fee}`,
             icon: <AccountBalance />,
           },
         ]
       : []),
-    ...(data.uplineCommission
+    ...(data.total_upline_commission
       ? [
           {
             name: "Upline Commission",
-            value: `$${data.uplineCommission}`,
+            value: `$${data.total_upline_commission}`,
             icon: <Handshake />,
           },
         ]

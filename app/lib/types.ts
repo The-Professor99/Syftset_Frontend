@@ -1,11 +1,15 @@
-export const accountModes = [
-  "crypto-1",
-  "forex-1",
-  "crypto-2",
-  "forex-2",
-] as const;
+export const accountModes = ["crypto-1", "forex-1"] as const;
 
-const activityTypes = ["deposit", "withdrawal", "sessionUpdate"] as const;
+export const activityTypes = [
+  "deposit",
+  "withdrawal",
+  "trading_outcome",
+  "referral_bonus",
+  "upline_commission",
+  "management_fee",
+  "trading_fee",
+  "sessions",
+] as const;
 
 // Derive the union type from the tuple
 export type AccountMode = (typeof accountModes)[number];
@@ -14,16 +18,18 @@ export type AccountMode = (typeof accountModes)[number];
 export type ActivityType = (typeof activityTypes)[number];
 
 export type AccountModeDetails = {
-  accountMode: AccountMode;
+  account_type: AccountMode;
   balance: number;
-  totalDeposits: number;
-  totalWithdrawals: number;
-  totalPnL: number;
-  totalServiceCharges: number;
+  recent_activities: Activity[];
   id: string;
-  referralBonus?: number;
-  uplineCommission?: number;
-  managementFee?: number;
+  total_management_fee?: number;
+  referral_earnings?: number;
+  total_upline_commission?: number;
+  total_referral_earnings?: number;
+  total_deposits: number;
+  total_withdrawals: number;
+  total_pnl: number;
+  total_trading_fee: number;
 };
 
 type Timestamp = {
@@ -35,46 +41,34 @@ export type Transaction = {
   id: string;
   amount: number;
   timestamp: Timestamp;
-  prevBalance: number;
-  newBalance: number;
+  prev_balance: number;
+  new_balance: number;
+  transaction_type: ActivityType;
 };
 
 export type Activity = {
   id: string;
-  message: string;
+  description: string;
   timestamp: Timestamp;
-  type: ActivityType;
+  activity_type: ActivityType;
 };
-
-export type TransactionTableCategory =
-  | "deposits"
-  | "withdrawals"
-  | "recent_activities"
-  | "session_details";
 
 export type GlobalSessionDetail = {
   id: string;
-  sessionId: string;
-  startDate: {
-    seconds: number;
-    nanoseconds: number;
-  };
-  endDate: {
-    seconds: number;
-    nanoseconds: number;
-  };
-  btcPercentageChange?: number;
-  ethPercentageChange?: number;
-  roi: number;
+  session_number: number;
+  start_date: Timestamp;
+  end_date: Timestamp;
+  btc_percentage_change?: number;
+  eth_percentage_change?: number;
+  profit_percentage: number;
 };
 
 export type UserSessionDetail = {
-  sessionId: string;
-  startingBalance: number;
+  starting_balance: number;
   pnl: number;
-  serviceCharge: number;
-  managementFee?: number;
-  referralBonus?: number;
-  uplineCommission?: number;
+  trading_fee: number;
+  referral_bonus?: number;
+  upline_commission?: number;
   id: string;
+  timestamp: Timestamp;
 };

@@ -24,7 +24,7 @@ export default function AccountModesDisplay({
   >;
 }) {
   const accountModes = accountsDetails.map(
-    (accountDetail) => accountDetail.accountMode
+    (accountDetail) => accountDetail.account_type
   );
   const [addAccount, setAddAccount] = React.useState(false);
 
