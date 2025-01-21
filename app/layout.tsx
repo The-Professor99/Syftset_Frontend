@@ -25,14 +25,9 @@ const NAVIGATION: Navigation = [
     title: "Dashboard Pages",
   },
   {
-    title: "Deposits",
+    title: "Transactions",
     icon: <MoveToInbox />,
-    segment: "dashboard/deposits",
-  },
-  {
-    title: "Withdrawals",
-    icon: <Outbox />,
-    segment: "dashboard/withdrawals",
+    segment: "dashboard/transactions",
   },
 ];
 
@@ -42,7 +37,7 @@ const AUTHENTICATION = {
 };
 
 const BRANDING = {
-  logo: <SitemarkIcon />,
+  // logo: <SitemarkIcon />, console.log
   title: "Syftset",
 };
 
