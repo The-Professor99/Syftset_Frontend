@@ -25,7 +25,7 @@ function SignUpLink() {
     <Alert severity="info">
       Access to this website ({websiteUrl}) is by invitation only.
       <List sx={{ px: 0 }}>
-        <ListItem sx={{ p: 0, minHeight: 32, color: "rgba(255,255,255,.8)" }}>
+        <ListItem sx={{ p: 0, minHeight: 32 }}>
           <ListItemIcon sx={{ color: "inherit", mr: 2 }}>
             <Password />
           </ListItemIcon>
@@ -35,7 +35,7 @@ function SignUpLink() {
           />
         </ListItem>
 
-        <ListItem sx={{ p: 0, minHeight: 32, color: "rgba(255,255,255,.8)" }}>
+        <ListItem sx={{ p: 0, minHeight: 32 }}>
           <ListItemIcon sx={{ color: "inherit", mr: 2 }}>
             <SupportAgent />
           </ListItemIcon>

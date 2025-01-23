@@ -6,7 +6,7 @@ import {
   sendPasswordResetEmail as _sendPasswordResetEmail,
   ActionCodeSettings,
 } from "firebase/auth";
-import { auth } from "./firebase";
+import { auth } from "./clientApp";
 
 export function onAuthStateChanged(cb: NextOrObserver<User>) {
   return _onAuthStateChanged(auth, cb);

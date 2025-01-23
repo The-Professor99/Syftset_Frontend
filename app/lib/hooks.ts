@@ -39,7 +39,6 @@ export const useRemoteService = <T>({
 
       try {
         const response = await fetch(url, { signal: controller.signal });
-        console.log(response);
         if (!response.ok) {
           throw new Error(response.statusText);
         }

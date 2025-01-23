@@ -3,7 +3,6 @@ import * as React from "react";
 import Stack from "@mui/material/Stack";
 import MenuList from "@mui/material/MenuList";
 import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
 import Divider from "@mui/material/Divider";
 import {
   Account,
@@ -13,7 +12,6 @@ import {
   SignOutButton,
 } from "@toolpad/core/Account";
 import { SidebarFooterProps } from "@toolpad/core/DashboardLayout";
-import { Dashboard } from "@mui/icons-material";
 import Link from "next/link";
 
 interface CustomAccountMenuProps extends SidebarFooterProps {

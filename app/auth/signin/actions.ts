@@ -10,10 +10,16 @@ async function signIn(
   callbackUrl?: string
 ) {
   try {
+    const email = formData.get("email");
+    const password = formData.get("password");
+    if (typeof email !== "string" || typeof password !== "string") {
+      throw new Error("Email and Password must be valid strings!");
+    }
+
     return await signInAction(provider.id, {
       ...(formData && {
-        email: formData.get("email"),
-        password: formData.get("password"),
+        email,
+        password,
       }),
       redirectTo: callbackUrl ?? appRoutes.dashboard,
     });
@@ -35,6 +41,13 @@ async function signIn(
             ? "Invalid credentials."
             : "An error with Auth.js occurred.",
         type: error.type,
+      };
+    }
+
+    if (error instanceof Error) {
+      return {
+        error: error.message,
+        type: error.name,
       };
     }
     // An error boundary must exist to handle unknown errors
