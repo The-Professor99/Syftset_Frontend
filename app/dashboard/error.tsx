@@ -14,7 +14,7 @@ export default function Error({
     console.error(error);
   }, [error]);
 
-  // console.log("ToDo: Beautify page");
+  // ToDo: Beautify page
   return (
     <div>
       <h2>Something went wrong!</h2>

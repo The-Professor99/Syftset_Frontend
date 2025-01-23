@@ -1,4 +1,4 @@
-import CustomizedDataGrid from "@/app/components/CustomDataGrid";
+import CustomizedDataGrid from "@/app/ui/Tables/CustomDataGrid";
 import { Activity, ActivityType } from "@/app/lib/types";
 import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";

@@ -1,8 +1,8 @@
 import * as React from "react";
 import { Box } from "@mui/material";
 import Divider from "@mui/material/Divider";
-import AppAppBar from "../components/template_components/AppAppBar";
-import Footer from "../components/template_components/Footer";
+import AppAppBar from "../ui/homepage/AppAppBar";
+import Footer from "../ui/homepage/Footer";
 
 export default function Layout(props: { children: React.ReactNode }) {
   return (

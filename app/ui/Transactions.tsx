@@ -1,7 +1,7 @@
 "use client";
 import { AccountMode, ActivityType, Transaction } from "@/app/lib/types";
 import React from "react";
-import CustomizedDataGrid from "@/app/components/CustomDataGrid";
+import CustomizedDataGrid from "@/app/ui/Tables/CustomDataGrid";
 import { GridColDef } from "@mui/x-data-grid";
 import { useRemoteService } from "../lib/hooks";
 import DataDisplay from "./DataDisplay";

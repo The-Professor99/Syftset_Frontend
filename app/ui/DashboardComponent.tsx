@@ -17,7 +17,7 @@ export default function DashboardContent() {
   const [currentAccountMode, setCurrentAccountMode] =
     useLocalStorageState<AccountMode>("accountMode", "crypto-1");
 
-  // console.log build loading and error pages for the components dependent on this
+  // ToDo build loading and error pages for the components dependent on this
   const {
     data: allAcountsDetails,
     loading,

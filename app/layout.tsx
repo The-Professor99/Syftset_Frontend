@@ -6,7 +6,7 @@ import type { Navigation } from "@toolpad/core/AppProvider";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import theme from "../theme";
 import { auth } from "../auth";
-import { MoveToInbox, Outbox } from "@mui/icons-material";
+import { ReceiptLong } from "@mui/icons-material";
 import { Box } from "@mui/material";
 
 const NAVIGATION: Navigation = [
@@ -24,7 +24,7 @@ const NAVIGATION: Navigation = [
   },
   {
     title: "Transactions",
-    icon: <MoveToInbox />,
+    icon: <ReceiptLong />,
     segment: "dashboard/transactions",
   },
 ];
@@ -34,7 +34,7 @@ const AUTHENTICATION = {
   signOut,
 };
 
-const BRANDING = {
+export const BRANDING = {
   logo: (
     <Box component="img" src="/favicon.ico" sx={{ p: 1 }} alt="Syftset Logo" />
   ),
@@ -46,7 +46,7 @@ export default async function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   const session = await auth();
   return (
-    <html lang="en" data-toolpad-color-scheme="light">
+    <html lang="en" data-toolpad-color-scheme="dark">
       <body>
         <SessionProvider session={session}>
           <AppRouterCacheProvider options={{ enableCssLayer: true }}>

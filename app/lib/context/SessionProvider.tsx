@@ -1,9 +1,9 @@
 "use client";
 import { createContext, useContext, useEffect, useState } from "react";
 import { onAuthStateChanged } from "@/app/lib/firebase/auth";
-import { Session, User } from "../lib/types";
+import { Session, User } from "../types";
 import { useRouter } from "next/navigation";
-import { firebaseConfig } from "../lib/firebase/config";
+import { firebaseConfig } from "../firebase/config";
 
 const SessionContext = createContext<User | null>(null);
 
