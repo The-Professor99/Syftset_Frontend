@@ -72,3 +72,13 @@ export type UserSessionDetail = {
   id: string;
   timestamp: Timestamp;
 };
+
+export type User = {
+  id: string | null;
+  name: string | null;
+  email: string | null;
+};
+
+export type Session = {
+  user: User;
+};
