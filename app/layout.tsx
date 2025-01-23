@@ -1,15 +1,13 @@
 import * as React from "react";
 import { AppProvider } from "@toolpad/core/nextjs";
 import DashboardIcon from "@mui/icons-material/Dashboard";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { AppRouterCacheProvider } from "@mui/material-nextjs/v15-appRouter";
 import type { Navigation } from "@toolpad/core/AppProvider";
 import { SessionProvider, signIn, signOut } from "next-auth/react";
 import theme from "../theme";
 import { auth } from "../auth";
-import Link from "next/link";
-import SitemarkIcon from "./components/template_components/SitemarkIcon";
 import { MoveToInbox, Outbox } from "@mui/icons-material";
+import { Box } from "@mui/material";
 
 const NAVIGATION: Navigation = [
   {
@@ -37,7 +35,9 @@ const AUTHENTICATION = {
 };
 
 const BRANDING = {
-  // logo: <SitemarkIcon />, console.log
+  logo: (
+    <Box component="img" src="/favicon.ico" sx={{ p: 1 }} alt="Syftset Logo" />
+  ),
   title: "Syftset",
 };
 

@@ -48,7 +48,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     authorized({ auth: session, request: { nextUrl } }) {
       const isLoggedIn = !!session?.user;
       const isOnDashboard = nextUrl.pathname.startsWith(appRoutes.dashboard);
-      const isOnAuth = nextUrl.pathname.startsWith(appRoutes.auth);
+      const isOnAuth = nextUrl.pathname.startsWith(`${appRoutes.auth}/`);
 
       if (isOnDashboard && !isLoggedIn) {
         return false; // Redirect unauthenticated users to login page
@@ -59,6 +59,12 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       }
 
       return true;
+    },
+    session({ session, token }) {
+      if (token?.sub) {
+        session.user.id = token.sub; // Attach the user ID to the client session object
+      }
+      return session;
     },
   },
 });

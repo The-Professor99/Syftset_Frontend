@@ -1,7 +1,5 @@
 "use server";
-import { db } from "@/app/lib/firebase/firebase";
 import { collection, getDocs, orderBy, query, limit } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 import {
   AccountMode,
   AccountModeDetails,
@@ -11,10 +9,12 @@ import {
   UserSessionDetail,
 } from "../lib/types";
 import { FirebaseError } from "firebase/app";
+import { db } from "../lib/firebase/firebaseApp";
+import { auth } from "@/auth";
 
-const dummyUID = "5f57d2ee-19ba-4b88-a8b6-921d810c6cf3";
 export async function getAccountModes() {
-  const userId = dummyUID; //auth.currentUser?.uid; console.log()
+  const session = await auth();
+  const userId = session?.user?.id;
 
   try {
     if (userId) {
@@ -46,8 +46,8 @@ export async function getTransactions(
   collectionName: ActivityType,
   limitNum: string | null
 ) {
-  // const auth = getAuth();
-  const userId = dummyUID; //auth.currentUser?.uid; console.log()
+  const session = await auth();
+  const userId = session?.user?.id;
 
   try {
     if (userId) {
@@ -101,6 +101,9 @@ export async function placeTransactionRequest(
   transactionType: "deposit" | "withdrawal"
 ) {
   try {
+    // const session = await auth();
+    // const userId = session?.user?.id
+
     // Artificially delay a response for demo purposes.
     await new Promise((resolve) => setTimeout(resolve, 3000));
     if (transactionType === "deposit") {
