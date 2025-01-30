@@ -42,13 +42,13 @@ const processData = (data: GlobalSessionDetail[]) => {
       `${sessionId} (${startDate} - ${endDate})`
     );
 
-    roi.push(sessionDetail.profit_percentage);
+    roi.push(sessionDetail.profit_percentage * 100);
     if (
       sessionDetail.btc_percentage_change &&
       sessionDetail.eth_percentage_change
     ) {
-      btcMovement.push(sessionDetail.btc_percentage_change);
-      ethMovement.push(sessionDetail.eth_percentage_change);
+      btcMovement.push(sessionDetail.btc_percentage_change * 100);
+      ethMovement.push(sessionDetail.eth_percentage_change * 100);
     }
 
     xAxisData.push(formattedSessionDetail);
@@ -117,7 +117,7 @@ export default function SessionsPerformanceCard({
             }}
           >
             <Typography variant="h4" component="p">
-              Average ROI
+              Median ROI
             </Typography>
             {roundedAverageROI ? (
               <Chip

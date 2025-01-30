@@ -44,6 +44,7 @@ export type Transaction = {
   prev_balance: number;
   new_balance: number;
   transaction_type: ActivityType;
+  description: string;
 };
 
 export type Activity = {

@@ -18,6 +18,7 @@ import SlideWrapper from "../SlideWrapper";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@mui/icons-material";
 import { useRemoteService } from "@/app/lib/hooks";
 import DataDisplay from "../DataDisplay";
+import { fShortenNumber } from "@/app/lib/utils";
 
 function DisplayMetric({ label, value }: { label: string; value: number }) {
   return (
@@ -26,7 +27,7 @@ function DisplayMetric({ label, value }: { label: string; value: number }) {
         {label}
       </Typography>
       <Typography variant="body2" sx={{ color: "text.secondary" }}>
-        ${value}
+        {fShortenNumber(value)}
       </Typography>
     </Grid>
   );

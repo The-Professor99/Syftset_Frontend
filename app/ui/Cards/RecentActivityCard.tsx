@@ -4,6 +4,7 @@ import { Card, CardContent, Typography, useTheme } from "@mui/material";
 import { GridColDef } from "@mui/x-data-grid";
 import DataDisplay from "../DataDisplay";
 import { renderTransactionType } from "../Transactions";
+import { Timestamp } from "firebase/firestore";
 
 export default function RecentActiviesCard({
   loading,
@@ -24,8 +25,14 @@ export default function RecentActiviesCard({
       headerName: "Date",
       flex: 1.5,
       minWidth: 200,
-      valueGetter: (_value: any, row: { timestamp: { seconds: number } }) =>
-        new Date(row.timestamp.seconds * 1000).toDateString(),
+      valueGetter: (_value: any, row: { timestamp: Timestamp }) =>
+        row.timestamp.seconds,
+      valueFormatter: (value?: number) => {
+        if (value == null) {
+          return "";
+        }
+        return new Date(value * 1000).toDateString();
+      },
     },
     {
       field: "activity_type",
@@ -69,13 +76,13 @@ export default function RecentActiviesCard({
           <CustomizedDataGrid
             rows={recentActivities}
             columns={columns}
-            hideFooter
             initialState={{
-              pagination: { paginationModel: { pageSize: 20 } },
+              pagination: { paginationModel: { pageSize: 5 } },
               sorting: {
                 sortModel: [{ field: "timestamp", sort: "desc" }],
               },
             }}
+            getRowId={(row: Activity) => row.id + "_" + row.activity_type}
             density="standard"
           />
         </DataDisplay>

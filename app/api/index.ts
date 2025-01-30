@@ -62,7 +62,7 @@ export async function getTransactions(
 
       const transactionsQuery = query(
         transactionsRef,
-        orderBy("timestamp", "desc"),
+        orderBy("timestamp", "asc"),
         limit(limitNum ? parseInt(limitNum) : 20)
       );
 
@@ -141,7 +141,7 @@ export async function getGlobalSessions(accountMode: AccountMode) {
   try {
     const sessionsRef = collection(db, "sessions", accountMode, "entries");
 
-    const sessionQuery = query(sessionsRef, orderBy("start_date", "desc"));
+    const sessionQuery = query(sessionsRef, orderBy("start_date", "asc"));
 
     const snapshot = await getDocs(sessionQuery);
 

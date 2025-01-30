@@ -6,6 +6,8 @@ import { GridColDef } from "@mui/x-data-grid";
 import { useRemoteService } from "../lib/hooks";
 import DataDisplay from "./DataDisplay";
 import { capitalize, Chip } from "@mui/material";
+import { fShortenNumber } from "../lib/utils";
+import { Timestamp } from "firebase/firestore";
 
 export function renderTransactionType(transactionType: ActivityType) {
   const colors: {
@@ -61,8 +63,14 @@ export default function Transactions({
       headerName: "Date",
       flex: 1.5,
       minWidth: 200,
-      valueGetter: (_value: any, row: { timestamp: { seconds: number } }) =>
-        new Date(row.timestamp.seconds * 1000).toDateString(),
+      valueGetter: (_value: any, row: { timestamp: Timestamp }) =>
+        row.timestamp.seconds,
+      valueFormatter: (value?: number) => {
+        if (value == null) {
+          return "";
+        }
+        return new Date(value * 1000).toDateString();
+      },
     },
     {
       field: "transaction_type",
@@ -77,13 +85,42 @@ export default function Transactions({
       headerName: "Previous Balance",
       flex: 1.5,
       minWidth: 200,
+      valueFormatter: (value?: number) => {
+        if (value == null) {
+          return "";
+        }
+        return fShortenNumber(value);
+      },
     },
-    { field: "amount", headerName: "Amount", flex: 1.5, minWidth: 200 },
+    {
+      field: "amount",
+      headerName: "Amount",
+      flex: 1.5,
+      minWidth: 200,
+      valueFormatter: (value?: number) => {
+        if (value == null) {
+          return "";
+        }
+        return fShortenNumber(value);
+      },
+    },
     {
       field: "new_balance",
       headerName: "New Balance",
       flex: 1.5,
       minWidth: 200,
+      valueFormatter: (value?: number) => {
+        if (value == null) {
+          return "";
+        }
+        return fShortenNumber(value);
+      },
+    },
+    {
+      field: "description",
+      headerName: "Description",
+      flex: 1.5,
+      minWidth: 400,
     },
   ];
 

@@ -61,8 +61,8 @@ const StyledText = styled("text", {
 }));
 
 interface PieCenterLabelProps {
-  primaryText: string;
-  secondaryText: string;
+  primaryText: string | number;
+  secondaryText: string | number;
 }
 
 function PieCenterLabel({ primaryText, secondaryText }: PieCenterLabelProps) {
@@ -125,14 +125,14 @@ const processData = (data: AccountModeDetails | undefined) => {
     },
     {
       name: "Trading Fee",
-      value: `$${data.total_trading_fee}`,
+      value: fShortenNumber(data.total_trading_fee),
       icon: <RequestQuote />,
     },
     ...(data.total_management_fee
       ? [
           {
             name: "Management Fee",
-            value: `$${data.total_management_fee}`,
+            value: fShortenNumber(data.total_management_fee),
             icon: <AccountBalance />,
           },
         ]
@@ -141,7 +141,7 @@ const processData = (data: AccountModeDetails | undefined) => {
       ? [
           {
             name: "Upline Commission",
-            value: `$${data.total_upline_commission}`,
+            value: fShortenNumber(data.total_upline_commission),
             icon: <Handshake />,
           },
         ]
@@ -149,7 +149,7 @@ const processData = (data: AccountModeDetails | undefined) => {
   ];
   return {
     pieData: pieData,
-    totalEarnings: `$${formattedEarnings}`,
+    totalEarnings: formattedEarnings,
     barData: barData,
   };
 };

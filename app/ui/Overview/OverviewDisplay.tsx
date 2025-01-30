@@ -41,13 +41,13 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Account Balance",
-            value: `$${fShortenNumber(currentAccountDetails?.balance || 0)}`,
+            value: fShortenNumber(currentAccountDetails?.balance || 0),
           }}
           slots={{
             icon: <AccountBalance />,
             actionButton: currentAccountDetails?.referral_earnings ? (
               <Typography variant="body2" color="text.secondary">
-                Referral Earning: $
+                Referral Earning:
                 {fShortenNumber(currentAccountDetails.referral_earnings)}
               </Typography>
             ) : null,
@@ -59,10 +59,10 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Total Deposit",
-            value: `$${fShortenNumber(currentAccountDetails?.total_deposits || 0)}`,
+            value: fShortenNumber(currentAccountDetails?.total_deposits || 0),
             button: {
               text: "View Deposits",
-              link: appRoutes.deposits,
+              link: appRoutes.transactions,
             },
           }}
           slotProps={{
@@ -84,10 +84,12 @@ export default function OverviewDisplay({
         <OverviewCard
           details={{
             title: "Total Withdrawals",
-            value: `$${fShortenNumber(currentAccountDetails?.total_withdrawals || 0)}`,
+            value: fShortenNumber(
+              currentAccountDetails?.total_withdrawals || 0
+            ),
             button: {
               text: "View Withdrawals",
-              link: appRoutes.withdrawals,
+              link: `${appRoutes.transactions}?category=withdrawal`,
             },
           }}
           slotProps={{
