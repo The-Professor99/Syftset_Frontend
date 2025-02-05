@@ -21,7 +21,8 @@ async function signIn(
         email,
         password,
       }),
-      redirectTo: callbackUrl ?? appRoutes.dashboard,
+      redirectTo:
+        callbackUrl && callbackUrl !== "/" ? callbackUrl : appRoutes.dashboard,
     });
   } catch (error) {
     // The desired flow for successful sign in in all cases

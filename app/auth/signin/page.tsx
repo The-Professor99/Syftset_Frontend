@@ -23,7 +23,7 @@ function SignUpLink() {
   const websiteUrl = process.env.NEXT_PUBLIC_LIVE_URL;
   return (
     <Alert severity="info">
-      Access to this website ({websiteUrl}) is by invitation only.
+      Access to this website ({websiteUrl}/dashboard) is by invitation only.
       <List sx={{ px: 0 }}>
         <ListItem sx={{ p: 0, minHeight: 32 }}>
           <ListItemIcon sx={{ color: "inherit", mr: 2 }}>
