@@ -8,12 +8,12 @@ import Link from "@mui/material/Link";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import FacebookIcon from "@mui/icons-material/GitHub";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
 import TwitterIcon from "@mui/icons-material/X";
 import Copyright from "../Copyright";
 import { BRANDING } from "@/app/layout";
 import { AppTitle } from "../AppTitle";
+import { Facebook, YouTube } from "@mui/icons-material";
 
 export default function Footer() {
   return (
@@ -50,38 +50,8 @@ export default function Footer() {
               gutterBottom
               sx={{ fontWeight: 600, mt: 2 }}
             >
-              Join the newsletter
+              Automated Trading, Smarter Investing.
             </Typography>
-            <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
-              Subscribe for weekly updates. No spams ever!
-            </Typography>
-            <InputLabel htmlFor="email-newsletter">Email</InputLabel>
-            <Stack direction="row" spacing={1} useFlexGap>
-              <TextField
-                id="email-newsletter"
-                hiddenLabel
-                size="small"
-                variant="outlined"
-                fullWidth
-                aria-label="Enter your email address"
-                placeholder="Your email address"
-                slotProps={{
-                  htmlInput: {
-                    autoComplete: "off",
-                    "aria-label": "Enter your email address",
-                  },
-                }}
-                sx={{ width: "250px" }}
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                size="small"
-                sx={{ flexShrink: 0 }}
-              >
-                Subscribe
-              </Button>
-            </Stack>
           </Box>
         </Box>
         <Box
@@ -94,40 +64,17 @@ export default function Footer() {
           <Typography variant="body2" sx={{ fontWeight: "medium" }}>
             Product
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link color="text.secondary" variant="body2" href="#features">
             Features
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Testimonials
+          <Link color="text.secondary" variant="body2" href="#process">
+            Our Process
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Highlights
+          <Link color="text.secondary" variant="body2" href="#model">
+            Our Model
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Pricing
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link color="text.secondary" variant="body2" href="#faq">
             FAQs
-          </Link>
-        </Box>
-        <Box
-          sx={{
-            display: { xs: "none", sm: "flex" },
-            flexDirection: "column",
-            gap: 1,
-          }}
-        >
-          <Typography variant="body2" sx={{ fontWeight: "medium" }}>
-            Company
-          </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
-            About us
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Careers
-          </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Press
           </Link>
         </Box>
         <Box
@@ -140,14 +87,32 @@ export default function Footer() {
           <Typography variant="body2" sx={{ fontWeight: "medium" }}>
             Legal
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link
+            color="text.secondary"
+            variant="body2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://docs.google.com/document/d/e/2PACX-1vRReIqIAwJe8S0wo2mTQ1uWGnwoq1yCLBPCB_Kb2aU07X_65gIJvQbCc-PYjHGMPAaT0svGU2U5P3mA/pub"
+          >
             Terms
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link
+            color="text.secondary"
+            variant="body2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://docs.google.com/document/d/e/2PACX-1vSHvi6sXC02SzCxWoRwNi1UaWnvn6qbmyyVKV2sAbbZnka2XIWHqVLAsuvvA034n7E-sPhWcMXlJ5Zz/pub"
+          >
             Privacy
           </Link>
-          <Link color="text.secondary" variant="body2" href="#">
-            Contact
+          <Link
+            color="text.secondary"
+            variant="body2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://docs.google.com/document/d/e/2PACX-1vTfUwHivpeM_EAC7yMiSF7B-3SVQmuVpSFtjJ8h6br4eUX91uzHFBU8ItjVYgN4DlLOejFK5NqCqWQa/pub"
+          >
+            Risk Disclosure
           </Link>
         </Box>
       </Box>
@@ -162,13 +127,25 @@ export default function Footer() {
         }}
       >
         <div>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link
+            color="text.secondary"
+            target="_blank"
+            rel="noopener noreferrer"
+            variant="body2"
+            href="https://docs.google.com/document/d/e/2PACX-1vSHvi6sXC02SzCxWoRwNi1UaWnvn6qbmyyVKV2sAbbZnka2XIWHqVLAsuvvA034n7E-sPhWcMXlJ5Zz/pub"
+          >
             Privacy Policy
           </Link>
           <Typography sx={{ display: "inline", mx: 0.5, opacity: 0.5 }}>
             &nbsp;•&nbsp;
           </Typography>
-          <Link color="text.secondary" variant="body2" href="#">
+          <Link
+            color="text.secondary"
+            variant="body2"
+            target="_blank"
+            rel="noopener noreferrer"
+            href="https://docs.google.com/document/d/e/2PACX-1vRReIqIAwJe8S0wo2mTQ1uWGnwoq1yCLBPCB_Kb2aU07X_65gIJvQbCc-PYjHGMPAaT0svGU2U5P3mA/pub"
+          >
             Terms of Service
           </Link>
           <Copyright />
@@ -182,16 +159,7 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://github.com/mui"
-            aria-label="GitHub"
-            sx={{ alignSelf: "center" }}
-          >
-            <FacebookIcon />
-          </IconButton>
-          <IconButton
-            color="inherit"
-            size="small"
-            href="https://x.com/MaterialUI"
+            href="https://twitter.com/syftsetTech?ref_src=twsrc%5Etfw"
             aria-label="X"
             sx={{ alignSelf: "center" }}
           >
@@ -200,11 +168,29 @@ export default function Footer() {
           <IconButton
             color="inherit"
             size="small"
-            href="https://www.linkedin.com/company/mui/"
+            href="https://www.linkedin.com/company/syftset-technologies"
             aria-label="LinkedIn"
             sx={{ alignSelf: "center" }}
           >
-            <LinkedInIcon />
+            <LinkedInIcon color="info" />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            size="small"
+            href="https://fb.me/syftsetTech"
+            aria-label="Facebook"
+            sx={{ alignSelf: "center" }}
+          >
+            <Facebook color="primary" />
+          </IconButton>
+          <IconButton
+            color="inherit"
+            size="small"
+            href="https://www.youtube.com/channel/UCDdbqhM0qhykeePdZMM7vmg"
+            aria-label="Youtube"
+            sx={{ alignSelf: "center" }}
+          >
+            <YouTube color="error" />
           </IconButton>
         </Stack>
       </Box>

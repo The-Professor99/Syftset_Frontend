@@ -48,11 +48,9 @@ export default function AppAppBar() {
 
   const navItems = [
     { name: "Features", link: "#features" },
-    { name: "Testimonials", link: "#testimonials" },
-    { name: "Highlights", link: "#highlights" },
-    { name: "Pricing", link: "#pricing" },
+    { name: "Our Process", link: "#process" },
+    { name: "Our Model", link: "#model" },
     { name: "FAQ", link: "#faq" },
-    { name: "Blog", link: "#" },
   ];
 
   const accountMenuItems = [

@@ -9,7 +9,6 @@ import {
   Box,
   Button,
   capitalize,
-  FormControl,
   MenuItem,
   TextField,
   useTheme,
@@ -18,7 +17,7 @@ import { useLocalStorageState } from "@toolpad/core";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
 
-export const actionComponentMap: Record<
+const actionComponentMap: Record<
   Exclude<
     ActivityType,
     | "trading_outcome"

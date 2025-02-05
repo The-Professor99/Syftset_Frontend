@@ -1,3 +1,4 @@
+"use client";
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -7,35 +8,46 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 
 import { styled } from "@mui/material/styles";
-
-import DevicesRoundedIcon from "@mui/icons-material/DevicesRounded";
-import EdgesensorHighRoundedIcon from "@mui/icons-material/EdgesensorHighRounded";
-import ViewQuiltRoundedIcon from "@mui/icons-material/ViewQuiltRounded";
+import {
+  Memory,
+  QueryStatsRounded,
+  TrendingUp,
+  Verified,
+} from "@mui/icons-material";
+import { Paper } from "@mui/material";
 
 const items = [
   {
-    icon: <ViewQuiltRoundedIcon />,
-    title: "Dashboard",
+    icon: <Memory />,
+    title: "Automated, Data-Driven Trading",
     description:
-      "This item could provide a snapshot of the most important metrics or data points related to the product.",
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/dash-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/dash-dark.png")`,
+      "Our trading algorithms analyze market trends, optimize trade execution, and make data-driven decisions to maximize returns with precision and reliability.",
+    imageLight: `url("/images/data-driven.jpeg")`,
+    imageDark: `url("/images/data-driven-dark.jpeg")`,
   },
   {
-    icon: <EdgesensorHighRoundedIcon />,
-    title: "Mobile integration",
+    icon: <Verified color="success" />,
+    title: "Proven Success & Risk Management",
     description:
-      "This item could provide information about the mobile app version of the product.",
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/mobile-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/mobile-dark.png")`,
+      "With a focus on risk-adjusted returns and high success rates, we are committed to delivering steady, reliable performance over time. Our strategies ensure sustainable portfolio growth while proactively mitigating potential losses.",
+    imageLight: `url("/images/proven-success.jpeg")`,
+    imageDark: `url("/images/proven-success-dark.jpeg")`,
   },
   {
-    icon: <DevicesRoundedIcon />,
-    title: "Available on all platforms",
+    icon: <QueryStatsRounded />,
+    title: "Transparent Fund Management",
     description:
-      "This item could let users know the product is available on all platforms, such as web, mobile, and desktop.",
-    imageLight: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/devices-light.png")`,
-    imageDark: `url("${process.env.TEMPLATE_IMAGE_URL || "https://mui.com"}/static/images/templates/templates-images/devices-dark.png")`,
+      "No hidden fees — just straightforward returns, where you keep the majority of your profits. We believe in setting reasonable expectations. With our intuitive dashboard, you’ll always know where your investments stand.",
+    imageLight: `url("/images/transparent-management.jpeg")`,
+    imageDark: `url("/images/transparent-management-dark.jpeg")`,
+  },
+  {
+    icon: <TrendingUp color="primary" />,
+    title: "Simple & Seamless Investing",
+    description:
+      "No need to monitor charts or predict market movements—our system does the heavy lifting for you. Whether you're a beginner or an experienced investor, Syftset provides a simple and effective way to participate in the markets and grow your wealth.",
+    imageLight: `url("/images/simple-investing.jpeg")`,
+    imageDark: `url("/images/simple-investing-dark.jpeg")`,
   },
 ];
 
@@ -98,9 +110,11 @@ export function MobileLayout({
         ))}
       </Box>
       <Card variant="outlined">
-        <Box
+        <Paper
+          elevation={2}
           sx={(theme) => ({
-            mb: 2,
+            my: 2,
+            mx: 4,
             backgroundSize: "cover",
             backgroundPosition: "center",
             minHeight: 280,
@@ -152,15 +166,14 @@ export default function Features() {
           gutterBottom
           sx={{ color: "text.primary" }}
         >
-          Product features
+          Features
         </Typography>
         <Typography
           variant="body1"
           sx={{ color: "text.secondary", mb: { xs: 2, sm: 4 } }}
         >
-          Provide a brief overview of the key features of the product. For
-          example, you could list the number of features, their types or
-          benefits, and add-ons.
+          Smart investing made simple. Syftset’s trading system gives you an
+          edge in the market — secure, automated, and designed for success.
         </Typography>
       </Box>
       <Box
@@ -246,12 +259,14 @@ export default function Features() {
               pointerEvents: "none",
             }}
           >
-            <Box
+            <Paper
+              elevation={2}
               sx={(theme) => ({
                 m: "auto",
+                mx: 4,
                 width: 420,
                 height: 500,
-                backgroundSize: "contain",
+                backgroundSize: "cover",
                 backgroundImage: "var(--items-imageLight)",
                 ...theme.applyStyles("dark", {
                   backgroundImage: "var(--items-imageDark)",

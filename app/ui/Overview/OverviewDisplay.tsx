@@ -47,7 +47,7 @@ export default function OverviewDisplay({
             icon: <AccountBalance />,
             actionButton: currentAccountDetails?.referral_earnings ? (
               <Typography variant="body2" color="text.secondary">
-                Referral Earning:
+                Referral Earning:{" "}
                 {fShortenNumber(currentAccountDetails.referral_earnings)}
               </Typography>
             ) : null,
